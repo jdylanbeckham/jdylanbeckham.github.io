@@ -5,37 +5,53 @@ import logoImage from '@assets/img/logo.svg'
 export default defineThemeConfig({
   name: 'J. Dylan Beckham',
   id: 'j-dylan-beckham',
+
   seo: {
     title: 'J. Dylan Beckham',
-    description: 'J. Dylan Beckham is set up as an accessible portfolio with project pages and a contact flow.',
+    description:
+      'PMP-certified project professional combining project management, operations, business analytics, and technical fluency to turn complex objectives into structured, measurable outcomes.',
     image: previewImage,
   },
+
   logo: logoImage,
+
   colors: {
     primary: '#d648ff',
     secondary: '#00d1b7',
     neutral: '#b9bec4',
     outline: '#ff4500',
   },
+
   navigation: {
     darkmode: true,
     items: [
       {
-              type: 'link',
-              label: 'Home',
-              href: '/',
-            },
+        type: 'link',
+        label: 'Home',
+        href: '/',
+      },
       {
-              type: 'link',
-              label: 'Portfolio',
-              href: '/portfolio',
-            },
+        type: 'link',
+        label: 'About',
+        href: '/about',
+      },
       {
-              type: 'link',
-              label: 'Contact',
-              href: '/contact',
-            }
+        type: 'link',
+        label: 'Projects',
+        href: '/projects',
+      },
+      {
+        type: 'link',
+        label: 'Resume',
+        href: '/resume',
+      },
+      {
+        type: 'link',
+        label: 'Contact',
+        href: '/contact',
+      },
     ],
   },
+
   socials: [],
 })

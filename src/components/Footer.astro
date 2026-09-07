@@ -22,31 +22,49 @@ const socialLinks = themeConfig.socials ?? []
 <footer>
   <section class="py-16">
     <div class="container grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1fr)]">
-      <div class="space-content">
+      <div class="max-w-xl space-content">
         <Heading level="h2" size="h4">{themeConfig.name}</Heading>
+
         <p>
-          Replace this footer with your own links, business details, and supporting copy once you start customizing the
-          project.
+          Project management, business analysis, operations, and analytics
+          focused on turning complex objectives into structured,
+          measurable outcomes.
+        </p>
+
+        <p>
+          <Link href="/contact">
+            Get in touch
+          </Link>
         </p>
       </div>
+
       {
         footerLinks.length > 0 && (
           <div>
-            <Heading level="h2" size="h6" class="mb-4">Pages</Heading>
+            <Heading level="h2" size="h6" class="mb-4">
+              Pages
+            </Heading>
+
             <ul class="flex flex-col gap-2">
               {footerLinks.map((link) => (
                 <li>
-                  <Link href={link.href}>{link.label}</Link>
+                  <Link href={link.href}>
+                    {link.label}
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
         )
       }
+
       {
         socialLinks.length > 0 && (
           <div>
-            <Heading level="h2" size="h6" class="mb-4">Socials</Heading>
+            <Heading level="h2" size="h6" class="mb-4">
+              Connect
+            </Heading>
+
             <ul class="flex flex-col gap-2">
               {socialLinks.map((link) => (
                 <li>
@@ -61,15 +79,19 @@ const socialLinks = themeConfig.socials ?? []
       }
     </div>
   </section>
+
   <section class="py-8">
     <div class="container flex flex-col gap-4 md:flex-row md:justify-between">
       <p>
-        &copy; {currentYear} - Starter Theme for <Link href="https://astro.build/">Astro</Link>.
+        &copy; {currentYear} J. Dylan Beckham.
       </p>
+
       <p>
-        Made with ❤️ by <Link href="https://github.com/markteekman">Mark Teekman</Link>. Part of <Link
-          href="https://www.incluud.dev">Incluud</Link
-        >.
+        Built with
+        <Link href="https://astro.build/" isExternal>
+          Astro
+        </Link>
+        using an accessibility-first foundation.
       </p>
     </div>
   </section>

@@ -1,0 +1,157 @@
+---
+import DefaultLayout from '@layouts/DefaultLayout.astro'
+---
+
+<DefaultLayout
+  title="About"
+  description="About J. Dylan Beckham — PMP-certified project professional combining project management, operations, business analytics, and technical fluency."
+>
+  <section class="my-24">
+    <div class="container">
+      <div class="mx-auto max-w-5xl">
+        <p class="mb-4 text-lg font-semibold">About</p>
+
+        <h1 class="mb-10 text-5xl font-bold leading-tight md:text-7xl">
+          I work best where the objective is clear,
+          <span class="text-gradient"> but the path is not.</span>
+        </h1>
+
+        <div class="max-w-4xl space-y-6 text-xl leading-relaxed">
+          <p>
+            My background combines project management, operations, business
+            analytics, technical problem-solving, and entrepreneurship, giving
+            me experience working with incomplete information, competing
+            priorities, limited resources, and real operational constraints.
+          </p>
+
+          <p>
+            I bring structure to that ambiguity by defining the work,
+            identifying what matters, creating measurable ways to evaluate
+            progress, and coordinating execution toward an outcome.
+          </p>
+
+          <p>
+            My current professional development builds on that operating
+            experience with PMP certification and graduate study in Business
+            Analytics, while strengthening practical capability in SQL,
+            Python, data visualization, process analysis, and decision support.
+          </p>
+
+          <p>
+            The objective is not simply to produce analysis or administer a
+            project plan, but to connect information, people, process, and
+            execution so that better decisions lead to tangible results.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="my-32">
+    <div class="container">
+      <div class="mx-auto max-w-5xl">
+        <h2 class="mb-10 text-3xl font-bold md:text-5xl">
+          How I Work
+        </h2>
+
+        <p class="mb-10 max-w-4xl text-xl leading-relaxed">
+          My work tends to follow a consistent progression:
+        </p>
+
+        <p class="text-2xl font-bold">
+          Structure → Measure → Decide → Execute → Improve
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="my-32">
+    <div class="container">
+      <div class="mx-auto max-w-5xl">
+        <h2 class="mb-10 text-3xl font-bold md:text-5xl">
+          Professional Focus
+        </h2>
+
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+          <article class="border-t pt-6">
+            <h3 class="mb-3 text-2xl font-bold">
+              Project Management
+            </h3>
+            <p class="text-lg leading-relaxed">
+              Requirements, scope, schedules, stakeholders, risks,
+              dependencies, change, quality, and structured delivery.
+            </p>
+          </article>
+
+          <article class="border-t pt-6">
+            <h3 class="mb-3 text-2xl font-bold">
+              Business Analysis
+            </h3>
+            <p class="text-lg leading-relaxed">
+              Clarifying problems, translating stakeholder needs, defining
+              workflows, documenting requirements, and improving processes.
+            </p>
+          </article>
+
+          <article class="border-t pt-6">
+            <h3 class="mb-3 text-2xl font-bold">
+              Analytics &amp; Decision Support
+            </h3>
+            <p class="text-lg leading-relaxed">
+              KPIs, operational reporting, forecasting, dashboards, data
+              visualization, and analytical interpretation.
+            </p>
+          </article>
+
+          <article class="border-t pt-6">
+            <h3 class="mb-3 text-2xl font-bold">
+              Operations &amp; Technical Fluency
+            </h3>
+            <p class="text-lg leading-relaxed">
+              Practical execution supported by Python, SQL, data workflows,
+              technical tools, and experience operating under real constraints.
+            </p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="my-32">
+    <div class="container">
+      <div class="mx-auto max-w-5xl">
+        <h2 class="mb-10 text-3xl font-bold md:text-5xl">
+          Credentials
+        </h2>
+
+        <ul class="space-y-4 text-xl leading-relaxed">
+          <li><strong>PMP certification</strong></li>
+          <li><strong>CAPM certification</strong></li>
+          <li><strong>FAA Part 107</strong></li>
+          <li>
+            University of North Texas graduate —
+            Bachelor’s of AAS in Information Technologies, Data Analytics,
+            and Graphic Design
+          </li>
+          <li>
+            University of North Texas —
+            M.S. in Business Analytics in progress
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</DefaultLayout>
+
+<style lang="scss">
+  .text-gradient {
+    background: linear-gradient(
+      315deg,
+      light-dark(var(--color-primary-300), var(--color-secondary-100)) 25%,
+      light-dark(var(--color-secondary-300), var(--color-primary-200))
+    );
+    background-clip: border-box;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+</style>
