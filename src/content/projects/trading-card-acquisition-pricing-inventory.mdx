@@ -1,0 +1,72 @@
+---
+title: Trading Card Acquisition, Pricing & Inventory Optimization
+author: J. Dylan Beckham
+description: A multi-source decision-support workflow for collection valuation, inventory reconciliation, market-based pricing, trade valuation, and TCGplayer inventory management.
+tags: ['Business Analysis', 'Operations', 'Pricing Strategy', 'Data Analytics', 'Excel', 'Python']
+featured: true
+---
+
+## Project Overview
+
+Designed and operated an Excel-based decision-support system that combined TCGplayer inventory data with external Trader Tools market pricing to support collection acquisition, inventory reconciliation, retail repricing, trade valuation, and inventory management.
+
+The workflow supported recurring trading-card acquisition campaigns and post-event inventory processing at a scale of thousands of SKUs and thousands of cards evaluated during individual event weekends.
+
+## Business Problem
+
+Trading-card acquisition required decisions across multiple variables including market value, rarity, condition, language, inventory depth, customer demand, acquisition cost, and expected resale value.
+
+A repeatable process was needed to convert those inputs into practical buying, trading, pricing, and inventory decisions.
+
+## Original Solution
+
+The original workbook:
+
+- imported fresh TCGplayer inventory data;
+- incorporated Trader Tools pricing exports;
+- matched inventory records against external market pricing;
+- applied different business rules to bulk and higher-value inventory;
+- adjusted pricing based on condition and language;
+- controlled the number of copies exposed for sale;
+- calculated cash acquisition values;
+- calculated trade-in values;
+- generated CSV output for updating TCGplayer inventory and pricing;
+- routed unmatched records for manual verification.
+
+## Operating Scale
+
+The workflow supported an inventory of more than 4,000 SKUs and was used around recurring acquisition events occurring approximately 20 times per year.
+
+During individual event weekends, approximately 3,000 to 12,000 cards could be evaluated, with 4,000 to 5,000 or more cards retained during larger acquisition campaigns.
+
+When operating as a buyer for dealer booths, acquisition budgets could reach approximately $60,000 per event.
+
+## Representative Business Rules
+
+- Limit live inventory exposure to a maximum of eight copies per card.
+- Treat cards around or below the $1 threshold according to bulk-card economics.
+- Use market-driven pricing for higher-value inventory.
+- Apply condition- and language-based pricing adjustments.
+- Use value- and rarity-based acquisition rules.
+- Calculate trade-in value at 125% of cash buylist value.
+- Route unmatched or questionable records for manual review.
+
+## Modernization
+
+The original workbook successfully encoded substantial business and operating logic, but its reliance on manual data movement and positional spreadsheet formulas created maintainability and data-integrity risk as the system grew.
+
+The project is now being redesigned using Python and pandas to preserve the proven business rules while improving:
+
+- keyed record matching;
+- validation;
+- exception handling;
+- data-quality controls;
+- reproducibility;
+- maintainability;
+- documented business logic.
+
+## Project Status
+
+**Modernization in progress.**
+
+The original Excel workflow is being used as the historical source system and requirements reference for the redesigned Python implementation.

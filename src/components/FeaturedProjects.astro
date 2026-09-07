@@ -1,70 +1,78 @@
 ---
-import { Card, Heading, Link } from 'accessible-astro-components'
-import { Icon } from 'astro-icon/components'
+import { Heading, Link } from 'accessible-astro-components'
 import { getCollection } from 'astro:content'
-
-// Import images directly for optimization
-import projectImage1 from '@assets/images/projects/project-image-1.png'
-import projectImage2 from '@assets/images/projects/project-image-2.png'
-import projectImage3 from '@assets/images/projects/project-image-3.png'
 
 /**
  * FeaturedProjects Component
  *
- * @description A component that displays featured projects from Astro Content Collections
+ * Displays projects explicitly designated as featured
+ * in the Astro content collection.
  */
 interface Props {
-  /**
-   * Additional classes to apply to the section
-   */
   class?: string
-  /**
-   * The number of projects to display
-   * @default 3
-   */
   limit?: number
-  /**
-   * The title for the section
-   * @default "Featured projects"
-   */
   title?: string
 }
 
-const { class: className, limit = 3, title = 'Featured projects' } = Astro.props
+const {
+  class: className,
+  limit = 1,
+  title = 'Featured project'
+} = Astro.props
 
-// Get projects from content collection
 const projects = await getCollection('projects')
-const projectImages = [projectImage1, projectImage2, projectImage3]
 
-// Limit projects and add featured images
-const featuredProjects = projects.slice(0, limit).map((project, index) => ({
-  ...project,
-  featuredImage: projectImages[index % projectImages.length],
-}))
+const featuredProjects = projects
+  .filter((project) => project.data.featured)
+  .slice(0, limit)
 ---
 
 <section class:list={[className, 'my-64']}>
   <div class="container">
-    <Heading level="h2" class="mb-6">{title}</Heading>
-    <div class="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3">
+    <Heading level="h2" class="mb-10">{title}</Heading>
+
+    <div class="flex flex-col gap-16">
       {
         featuredProjects.map((project) => (
-          <Card
-            imageComponent={project.featuredImage}
-            url={'/portfolio/' + project.id}
-            headingLevel="h2"
-            title={project.data.title}
-            footer={'Author: ' + project.data.author}
-          >
-            {project.data.description}
-          </Card>
+          <article class="flex max-w-5xl flex-col gap-6">
+            <div class="flex flex-wrap gap-x-4 gap-y-2 text-sm font-semibold">
+              {project.data.tags.slice(0, 6).map((tag) => (
+                <span>{tag}</span>
+              ))}
+            </div>
+
+            <h3 class="text-3xl font-bold md:text-5xl">
+              {project.data.title}
+            </h3>
+
+            <p class="max-w-4xl text-xl leading-relaxed">
+              {project.data.description}
+            </p>
+
+            <div>
+              <Link
+                href={'/portfolio/' + project.id}
+                isButton
+                type="primary"
+                animateOnHover
+                animationType="nudge"
+              >
+                View Case Study
+              </Link>
+            </div>
+          </article>
         ))
       }
     </div>
-    <div class="mt-12">
-      <Link href="/portfolio/" isButton animateOnHover animationType="nudge">
-        View all projects
-        <Icon aria-hidden="true" name="lucide:arrow-right" size="1.5rem" />
+
+    <div class="mt-16">
+      <Link
+        href="/portfolio/"
+        isButton
+        animateOnHover
+        animationType="nudge"
+      >
+        View All Projects
       </Link>
     </div>
   </div>

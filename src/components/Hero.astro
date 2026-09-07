@@ -1,47 +1,53 @@
 ---
-import { Link, Notification } from 'accessible-astro-components'
-import { Icon } from 'astro-icon/components'
-import { Image } from 'astro:assets'
+import { Link } from 'accessible-astro-components'
 
 /**
  * Hero Component
  *
- * @description A component that displays a hero section with a title, description, and image
+ * Primary professional positioning for the PPAD portfolio landing page.
  */
-interface Props {
-  /**
-   * The source URL for the image
-   */
-  src?: string
-}
-
-const { src = '/astronaut-hero-img.webp' }: Props = Astro.props
 ---
 
 <section class="hero my-24">
   <div class="container">
-    <div class="grid grid-cols-1 items-center gap-24 lg:grid-cols-2">
-      <div class="flex flex-col items-center gap-8 md:items-start">
-        <h1 class="text-center text-6xl md:text-left lg:text-8xl"><span class="text-gradient">J.</span> Dylan Beckham</h1>
+    <div class="mx-auto flex max-w-5xl flex-col items-start gap-8">
+      <p class="text-xl font-semibold">
+        J. Dylan Beckham
+      </p>
 
-        <Notification type="info" variant="accent">
-          <p>Swap the placeholder project content for your own case studies and update the tags to match your work.</p>
-        </Notification>
-        <p class="text-center text-2xl md:text-left">
-          Showcase your work with accessible project pages, content collections, and a simple contact flow.
-        </p>
-        <div class="flex flex-col gap-3 min-[500px]:flex-row">
-          <Link href="/portfolio" isButton type="primary" animateOnHover animationType="boop">View projects</Link>
-        </div>
+      <h1 class="text-5xl leading-tight md:text-7xl lg:text-8xl">
+        Turning ambiguity into
+        <span class="text-gradient"> structured, measurable outcomes.</span>
+      </h1>
+
+      <p class="max-w-4xl text-2xl leading-relaxed">
+        PMP-certified project professional combining project management,
+        operations, business analytics, and technical fluency to define the
+        work, measure what matters, and move complex objectives toward execution.
+      </p>
+
+      <p class="text-lg font-semibold">
+        Project Management • Business Analysis • Operations • Analytics
+      </p>
+
+      <div class="flex flex-col gap-3 min-[500px]:flex-row">
+        <Link
+          href="/portfolio"
+          isButton
+          type="primary"
+          animateOnHover
+          animationType="boop"
+        >
+          View Projects
+        </Link>
       </div>
-      <Image class="hidden lg:block" src={src} alt="" decoding="async" width={800} height={600} loading="eager" />
     </div>
   </div>
 </section>
 
 <style lang="scss">
   h1 {
-    text-wrap: unset;
+    text-wrap: balance;
   }
 
   .text-gradient {
