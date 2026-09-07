@@ -1,0 +1,21 @@
+---
+import DefaultLayout from '@layouts/DefaultLayout.astro'
+import PageHeader from '@components/PageHeader.astro'
+import { Link, Notification } from 'accessible-astro-components'
+import { Icon } from 'astro-icon/components'
+---
+
+<DefaultLayout title="Thank you">
+  <PageHeader title="Thank you" subtitle="Your form submission was received." bgType="gradient" />
+  <section class="container my-16">
+    <div class="space-content">
+      <Notification type="info">
+        <Icon aria-hidden="true" name="lucide:info" size={24} />
+        <p>Customize this page with your own confirmation message, follow-up details, or next steps.</p>
+      </Notification>
+      <Link href="/contact" isButton type="primary" animateOnHover animationType="boop">
+        Back to contact
+      </Link>
+    </div>
+  </section>
+</DefaultLayout>

@@ -1,0 +1,45 @@
+---
+import DefaultLayout from '@layouts/DefaultLayout.astro'
+import PageHeader from '@components/PageHeader.astro'
+import { Form, Input, Button, Textarea, Heading, Link } from 'accessible-astro-components'
+import { Icon } from 'astro-icon/components'
+---
+
+<DefaultLayout title="Contact">
+  <PageHeader
+    title="Contact"
+    subtitle="Use this page as a starting point for contact forms, enquiries, bookings, or support."
+    bgType="gradient"
+  />
+  <section class="container my-16">
+    <div class="grid grid-cols-1 gap-16 md:grid-cols-2">
+      <div class="space-content">
+        <Heading level="h2">Send a message</Heading>
+        <Form name="contact" action="/thank-you" method="post">
+          <Input name="name" label="Name" required autocomplete="name" />
+          <Input name="email" label="Email address" type="email" required autocomplete="email" />
+          <Textarea name="message" label="Message" required />
+          <Button htmlType="submit" type="primary">Send message</Button>
+        </Form>
+      </div>
+      <div class="space-content">
+        <Heading level="h2">Contact details</Heading>
+        <p>Replace these placeholders with your own email address, availability, and preferred contact channels.</p>
+        <div class="gap-2xs flex items-center">
+          <Icon aria-hidden="true" name="lucide:mail" size={20} class="shrink-0" />
+          <p>
+            <span class="font-bold">Email:</span>
+            <Link href="mailto:hello@example.com">hello@example.com</Link>
+          </p>
+        </div>
+        <div class="gap-2xs flex items-center">
+          <Icon aria-hidden="true" name="lucide:clock" size={20} class="shrink-0" />
+          <p>
+            <span class="font-bold">Availability:</span>
+            Monday to Thursday, 9:00 to 17:00
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</DefaultLayout>

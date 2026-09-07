@@ -1,0 +1,82 @@
+---
+import themeConfig from '@theme-config'
+import { Heading, Link } from 'accessible-astro-components'
+
+const currentYear = new Date().getFullYear()
+
+const footerLinks = themeConfig.navigation.items.flatMap((item) => {
+  if (item.type === 'dropdown') {
+    return item.items.filter((subItem) => !subItem.external)
+  }
+
+  if (!item.type || item.type === 'link') {
+    return item.external ? [] : [item]
+  }
+
+  return []
+})
+
+const socialLinks = themeConfig.socials ?? []
+---
+
+<footer>
+  <section class="py-16">
+    <div class="container grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1fr)]">
+      <div class="space-content">
+        <Heading level="h2" size="h4">{themeConfig.name}</Heading>
+        <p>
+          Replace this footer with your own links, business details, and supporting copy once you start customizing the
+          project.
+        </p>
+      </div>
+      {
+        footerLinks.length > 0 && (
+          <div>
+            <Heading level="h2" size="h6" class="mb-4">Pages</Heading>
+            <ul class="flex flex-col gap-2">
+              {footerLinks.map((link) => (
+                <li>
+                  <Link href={link.href}>{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+      {
+        socialLinks.length > 0 && (
+          <div>
+            <Heading level="h2" size="h6" class="mb-4">Socials</Heading>
+            <ul class="flex flex-col gap-2">
+              {socialLinks.map((link) => (
+                <li>
+                  <Link href={link.href} isExternal>
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+    </div>
+  </section>
+  <section class="py-8">
+    <div class="container flex flex-col gap-4 md:flex-row md:justify-between">
+      <p>
+        &copy; {currentYear} - Starter Theme for <Link href="https://astro.build/">Astro</Link>.
+      </p>
+      <p>
+        Made with ❤️ by <Link href="https://github.com/markteekman">Mark Teekman</Link>. Part of <Link
+          href="https://www.incluud.dev">Incluud</Link
+        >.
+      </p>
+    </div>
+  </section>
+</footer>
+
+<style>
+  footer section {
+    border-top: 1px solid var(--border-color-subtle);
+  }
+</style>
