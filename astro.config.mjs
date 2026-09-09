@@ -36,7 +36,7 @@ const viteConfig = {
 
 export default defineConfig({
   compressHTML: true,
-  site: 'https://example.com',
+  site: 'https://jdylanbeckham.com',
   integrations: [compress(), icon(), mdx(), sitemap()],
   vite: viteConfig,
 
