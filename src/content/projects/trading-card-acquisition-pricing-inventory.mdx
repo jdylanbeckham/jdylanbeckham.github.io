@@ -53,20 +53,118 @@ When operating as a buyer for dealer booths, acquisition budgets could reach app
 
 ## Modernization
 
-The original workbook successfully encoded substantial business and operating logic, but its reliance on manual data movement and positional spreadsheet formulas created maintainability and data-integrity risk as the system grew.
+The original workbook successfully encoded substantial business and operating
+logic, but its reliance on manual data movement and spreadsheet matching created
+maintainability and data-integrity risks as the system grew.
 
-The project is now being redesigned using Python and pandas to preserve the proven business rules while improving:
+The modernization project reconstructed the historical workflow in Python using
+pandas while preserving the proven operating rules.
 
-- keyed record matching;
-- validation;
-- exception handling;
-- data-quality controls;
-- reproducibility;
-- maintainability;
-- documented business logic.
+The redesigned workflow now:
 
-## Project Status
+• loads TCGplayer inventory and Trader Tools pricing data;
 
-**Modernization in progress.**
+• creates explicit normalized Name + Edition matching keys;
 
-The original Excel workflow is being used as the historical source system and requirements reference for the redesigned Python implementation.
+• validates the market-data relationship as many-to-one;
+
+• applies the reconstructed Tradelist Count = MIN(Count, 8) rule;
+
+• assigns Trader Tools sellPrice to deterministically matched records;
+
+• preserves original inventory data for traceability;
+
+• identifies unmatched records rather than silently force-matching them;
+
+• classifies reconciliation exceptions by cause; and
+
+• produces reproducible reconciliation and exception outputs.
+
+
+##Validation Results
+
+The reconstructed workflow was validated against 4,368 historical inventory
+records.
+
+• 4,368 source records preserved
+
+• 4,257 records successfully reconciled to Trader Tools pricing
+
+• 111 unresolved records retained as explicit exceptions
+
+• Name, Edition, and Count preserved across all 4,368 records
+
+• Tradelist Count = MIN(Count, 8) validated across all 4,368 records
+
+• Reconstructed pricing validated against Trader Tools sellPrice for all
+  4,257 matched records
+
+The completed standalone Python script independently reproduced the same results
+established during notebook-based reconstruction and validation.
+
+
+##Historical Findings
+
+The reconstruction identified several behaviors that were difficult to see in
+the original spreadsheet workflow.
+
+A controlled Ae / Æ normalization rule recovered three inventory records that
+had previously failed to reconcile because TCGplayer and Trader Tools represented
+the same card names differently.
+
+The analysis also reconstructed a historical Tarmogoyf pricing defect. Trader
+Tools contained sell prices of $139.97 for Modern Masters and $134.97 for Modern
+Masters 2015 Edition. The historical workbook assigned $274.94 to the Modern
+Masters record — exactly the sum of those two values.
+
+This demonstrated that both Masters-edition price records contributed to the
+historical result. The modernized workflow prevents this condition by requiring
+an explicit normalized Name + Edition relationship.
+
+The precise historical spreadsheet formula responsible was not inferred without
+direct formula evidence.
+
+
+##Project Status
+
+Python modernization and reconciliation reconstruction complete.
+
+The historical Excel workbook remains part of the project as source evidence and
+a record of the original operating system. The validated Python implementation
+now provides the reproducible reconciliation workflow.
+
+The project repository includes:
+
+• historical and reconstruction input data;
+
+• analytical reconstruction and validation notebook;
+
+• reusable Python reconciliation script;
+
+• modernized reconciliation output;
+
+• classified exception output; and
+
+• documented validation results.
+
+
+<section aria-labelledby="technical-evidence">
+  <h2 id="technical-evidence">Technical Evidence</h2>
+
+  <p>
+    The complete technical implementation is available in the project repository,
+    including the historical source materials, reconstruction notebook, reusable
+    Python workflow, reconciliation outputs, exception analysis, and documented
+    validation results.
+  </p>
+
+  <p>
+    <a
+      href="https://github.com/jdylanbeckham/tcgplayer-reconciliation-pricing"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      View GitHub Repository ↗
+    </a>
+  </p>
+</section>
