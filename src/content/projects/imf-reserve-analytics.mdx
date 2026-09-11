@@ -1,0 +1,206 @@
+---
+title: IMF Reserve Analytics
+author: J. Dylan Beckham
+description: Reconstruction and validation of an IMF reserve analytics project using Google BigQuery, SQL, and Tableau, with improved documentation and portfolio-ready visualizations.
+tags: ['Data Analytics', 'SQL', 'BigQuery', 'Tableau', 'Google Cloud', 'Data Visualization']
+featured: true
+---
+
+import { Image } from 'astro:assets'
+import topReserveHolders from '../../assets/images/projects/imf-reserve-analytics/top_reserve_holders_2023.png'
+import marketTrends from '../../assets/images/projects/imf-reserve-analytics/market_trends_global_reserves.png'
+
+## Project Overview
+
+Reconstructed and refined an earlier University of North Texas analytics project examining international reserve data from the International Monetary Fund (IMF).
+
+The original coursework used Google Cloud, BigQuery, SQL, and Tableau to prepare IMF reserve data and produce two primary analytical outputs:
+
+- Top Reserve Holders (2023)
+- Global Reserves Over Time (2020–2023)
+
+For the portfolio version, the original workflow was rebuilt, validated, documented, and re-visualized while preserving the original analytical intent.
+
+## Project Objectives
+
+The reconstruction focused on:
+
+- recovering the original data-preparation workflow;
+- rebuilding the analytical dataset in Google BigQuery;
+- reproducing the original SQL analysis;
+- validating reporting entities and measurement definitions;
+- recreating the original Tableau visualizations;
+- improving presentation quality without changing the core coursework scope; and
+- preserving the analytical workflow in a reproducible Git repository.
+
+## Data Preparation
+
+The IMF dataset contained reserve observations across countries, regional aggregates, institutions, indicators, and multiple time periods.
+
+The reconstruction recreated the cleaned analytical dataset in BigQuery and used SQL `UNPIVOT` operations where required to convert year-based columns into an analysis-ready year/value structure.
+
+Primary analytical attention was placed on annual observations from 2020 through 2023.
+
+## SQL Reconstruction
+
+The reconstructed SQL workflow was preserved as a sequence of version-controlled artifacts.
+
+The core reconstruction included:
+
+- rebuilding the year/value structure used in the original project;
+- validating the 2023 gold-reserve analysis;
+- removing regional and institutional aggregate entities from the country-level ranking;
+- producing the cleaned Top 10 reserve-holder result; and
+- rebuilding the 2020–2023 global-reserve trend.
+
+Additional exploratory SQL was retained separately to examine physical gold volume, market valuation, and differences between reserve measures, but that work was kept outside the initial coursework reconstruction scope.
+
+## Top Reserve Holders (2023)
+
+The original coursework ranked reporting entities using the IMF indicator:
+
+**Gold reserves at national valuation**
+
+During reconstruction, the original result was found to include a regional aggregate among country-level entities.
+
+For the portfolio version, regional and institutional aggregates were removed to produce a consistent country/jurisdiction comparison.
+
+The resulting Top 10 were:
+
+1. Germany
+2. Italy
+3. France
+4. Russian Federation
+5. China
+6. Switzerland
+7. Japan
+8. Türkiye
+9. India
+10. Netherlands
+
+Values are reported in **millions of U.S. dollars at national valuation**.
+
+<Image
+  src={topReserveHolders}
+  alt="Top Reserve Holders 2023 chart showing gold reserves at national valuation"
+/>
+
+## Market Trends: Global Reserves (2020–2023)
+
+The second original visualization examined changes in aggregate gold reserves at national valuation from 2020 through 2023.
+
+The reconstructed totals were approximately:
+
+| Year | Global Reserves |
+| --- | ---: |
+| 2020 | $6.74T |
+| 2021 | $6.56T |
+| 2022 | $6.63T |
+| 2023 | $7.64T |
+
+The reconstructed visualization shows:
+
+- a decline from 2020 to 2021;
+- a modest recovery during 2022; and
+- a substantial increase during 2023.
+
+<Image
+  src={marketTrends}
+  alt="Market Trends chart showing global reserves from 2020 through 2023"
+/>
+
+## Data Validation & Analytical Limitations
+
+Reconstructing the project revealed an important limitation in the original analysis.
+
+The IMF indicator **Gold reserves at national valuation** is expressed in U.S. dollars, but the underlying valuation basis follows national accounting practices.
+
+This means the values are valid representations of the source data, but they should not be interpreted as a standardized comparison of either physical gold holdings or current market value across countries.
+
+The reconstruction therefore distinguished between:
+
+**data accuracy**
+
+and
+
+**comparability for a specific analytical question**
+
+This limitation was documented as part of the reconstruction rather than used to redefine the scope of the original coursework.
+
+## Reconstruction Improvements
+
+The portfolio version improves the original project without replacing it with a different analysis.
+
+Improvements include:
+
+- removal of regional and institutional aggregates from the country ranking;
+- explicit identification of the national-valuation measurement basis;
+- rebuilt and documented BigQuery SQL;
+- version-controlled analytical artifacts;
+- cleaned and documented processed datasets;
+- redesigned Tableau visualizations;
+- improved titles, labels, units, and visual hierarchy; and
+- preservation of the original analytical workflow as technical evidence.
+
+## Skills Demonstrated
+
+- Google BigQuery
+- SQL querying and transformation
+- Data cleaning and preprocessing
+- Wide-to-long data transformation
+- Data validation
+- Measurement-definition validation
+- Tableau visualization
+- Data storytelling
+- Analytical troubleshooting
+- Git / GitHub version control
+- Technical documentation
+- Reconstruction and improvement of legacy analytical work
+
+## Project Status
+
+Original coursework reconstruction complete.
+
+The reconstructed project now includes:
+
+- validated BigQuery SQL;
+- cleaned and processed analytical datasets;
+- reconstructed Tableau workbooks;
+- portfolio-ready visualizations;
+- documented analytical limitations; and
+- a reproducible GitHub repository.
+
+## Original Coursework Presentation
+
+This portfolio case study was reconstructed from an earlier University of
+North Texas coursework project. The original presentation is preserved as a
+reference artifact and provides a point of comparison between the initial
+academic work and the reconstructed analysis presented here.
+
+<p>
+  <a
+    href="/files/projects/imf-reserve-analytics/original-coursework-presentation.pptx"
+    download
+  >
+    Download Original Coursework Presentation (.pptx) ↓
+  </a>
+</p>
+<section aria-labelledby="technical-evidence">
+  <h2 id="technical-evidence">Technical Evidence</h2>
+
+  <p>
+    The project repository contains the reconstructed SQL workflow, processed
+    analytical datasets, Tableau workbooks, finished visualizations, supporting
+    evidence, and documentation of the validation process.
+  </p>
+
+  <p>
+    <a
+      href="https://github.com/jdylanbeckham/imf-reserve-analysis"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      View GitHub Repository ↗
+    </a>
+  </p>
+</section>
