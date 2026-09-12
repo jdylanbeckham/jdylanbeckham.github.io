@@ -15,12 +15,12 @@ export default defineThemeConfig({
 
   logo: logoImage,
 
-  colors: {
-    primary: '#d648ff',
-    secondary: '#00d1b7',
-    neutral: '#b9bec4',
-    outline: '#ff4500',
-  },
+colors: {
+  primary: '#e63946',
+  secondary: '#1d3557',
+  neutral: '#b9bec4',
+  outline: '#e6a84a',
+},
 
   navigation: {
     darkmode: true,

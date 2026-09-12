@@ -34,40 +34,45 @@ const { Content } = await render(project)
   />
 
   <section class="my-10">
-    <div class="narrow container">
-      <div class="flex flex-wrap gap-2">
-        {
-          project.data.tags.map((tag) => (
-            <Badge>{tag}</Badge>
-          ))
-        }
+    <div class="container">
+      <div class="project-column">
+        <div class="flex flex-wrap gap-2">
+          {
+            project.data.tags.map((tag) => (
+              <Badge>{tag}</Badge>
+            ))
+          }
+        </div>
       </div>
     </div>
   </section>
 
   <section class="my-12">
-    <div class="narrow space-content container">
-      <Content />
+    <div class="container">
+      <div class="project-column space-content">
+        <Content />
+      </div>
     </div>
   </section>
 
   <section class="my-20">
-    <div class="narrow container border-t pt-8">
-      <Link
-        href="/projects"
-        isButton
-        animateOnHover
-        animationType="nudge"
-      >
-        Back to Projects
-      </Link>
+    <div class="container">
+      <div class="project-column border-t pt-8">
+        <Link
+          href="/projects"
+          isButton
+          animateOnHover
+          animationType="nudge"
+        >
+          Back to Projects
+        </Link>
+      </div>
     </div>
   </section>
 </DefaultLayout>
 
 <style lang="scss" is:global>
-  .narrow {
-    margin-inline: auto;
-    max-width: 70ch;
+  .project-column {
+    max-width: 90ch;
   }
 </style>
