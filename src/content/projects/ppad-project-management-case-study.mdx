@@ -1,0 +1,519 @@
+---
+title: Professional Portfolio & Analytics Development (PPAD)
+author: J. Dylan Beckham
+description: A self-directed project-management case study showing how a professional portfolio was planned, baselined, executed, controlled, released, and evolved using formal project controls, Jira, Git/GitHub, and an information radiator.
+tags: ['Project Management', 'Project Controls', 'Scope Management', 'Schedule Management', 'Risk Management', 'Change Control', 'Jira', 'GitHub']
+featured: false
+---
+
+import { Image } from 'astro:assets'
+import radiator from '../../assets/images/projects/ppad/ppad_information_radiator_release2.png'
+import decisionLog from '../../assets/images/projects/ppad/ppad_decision_log.png'
+import changeLog from '../../assets/images/projects/ppad/ppad_change_log.png'
+
+## Project Overview
+
+**Professional Portfolio & Analytics Development (PPAD)** is the project used to plan, build, deploy, control, and evolve this professional portfolio.
+
+The project was intentionally managed as more than a website build. It combined project-management governance, requirements management, scope definition, schedule and cost planning, risk and decision controls, technical implementation, portfolio-content development, version control, and release management into one controlled delivery environment.
+
+The result is both:
+
+- a working professional portfolio; and
+- a live project-management case study demonstrating how ambiguous goals can be converted into structured, measurable, controlled delivery.
+
+## Business Problem
+
+The starting problem was broad:
+
+> Build a professional portfolio that can support project-management, business-analysis, operations, and analytics job searches.
+
+That statement was not specific enough to manage.
+
+PPAD therefore treated the portfolio as a product and decomposed the objective into defined stakeholder needs, requirements, work packages, activities, acceptance criteria, releases, technical repositories, publication standards, and measurable controls.
+
+The portfolio also needed to remain practical. Project work had to coexist with graduate coursework and active job searching, development time was limited, budget was intentionally minimal, some historical source material required reconstruction, and not all historical data was suitable for public publication.
+
+## Governance Model
+
+PPAD uses a single-owner governance structure.
+
+**J. Dylan Beckham** serves as:
+
+- Project Sponsor
+- Project Manager
+- Product Owner
+
+That structure provides fast decision-making but also creates a governance risk: the same person requesting, prioritizing, executing, and approving work can make scope expansion difficult to detect.
+
+To compensate, PPAD relies on controlled artifacts and explicit decision records rather than informal memory.
+
+Governance and delivery are separated conceptually:
+
+- **Project Sponsor** — strategic authorization and material change approval
+- **Project Manager** — planning, coordination, monitoring, and control
+- **Product Owner** — prioritization of portfolio value and releases
+- **Technical Developer** — website, Git/GitHub, SQL, Python, and implementation work
+- **Business Analyst** — business questions, requirements, analytical interpretation
+- **Content Owner** — portfolio and historical-content evaluation and publication
+
+The delivery roles may be performed by the same individual, but they do not replace the governance responsibilities.
+
+## Requirements & Scope Baseline
+
+The approved Requirements Baseline contains **65 requirements** across five classes:
+
+<div class="table-wrapper">
+  <table>
+    <thead>
+      <tr>
+        <th>Requirement Class</th>
+        <th>Count</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Business Requirements</td><td>8</td></tr>
+      <tr><td>Stakeholder Requirements</td><td>17</td></tr>
+      <tr><td>Functional Requirements</td><td>18</td></tr>
+      <tr><td>Nonfunctional Requirements</td><td>12</td></tr>
+      <tr><td>Transition Requirements</td><td>10</td></tr>
+      <tr><td><strong>Total</strong></td><td><strong>65</strong></td></tr>
+    </tbody>
+  </table>
+</div>
+
+The requirements were then translated into the approved project scope.
+
+The **Scope Baseline** was established from three controlled components:
+
+1. Project Scope Statement
+2. Work Breakdown Structure
+3. WBS Dictionary
+
+The WBS decomposes PPAD across project management, website delivery, technical infrastructure, project reconstruction, analytics capability development, content migration, job-search integration, deployment, feedback, and continuing-value review.
+
+A key scope-control rule was established early:
+
+> New work does not automatically become project scope.
+
+Proposed additions or removals must be evaluated for their effect on requirements, deliverables, schedule, cost, dependencies, risk, and release commitments.
+
+## Planning & Activity Control
+
+The current Activity Log contains **283 controlled activities**, numbered ACT-001 through ACT-283.
+
+The activity structure supports:
+
+- predecessors and dependency management;
+- duration and fixed-work estimates;
+- release classification;
+- activity status;
+- Jira synchronization;
+- evidence and completion notes; and
+- downstream reporting through the Information Radiator.
+
+The WBS defines authorized work-package scope, while execution status is maintained through operational control systems including Jira, the Activity Log, project controls, and the Information Radiator.
+
+## Delivery Architecture
+
+PPAD uses a layered delivery and evidence architecture.
+
+### Portfolio Presentation
+
+**jdylanbeckham.com**
+
+The website is the primary presentation layer for:
+
+- professional positioning;
+- résumé and credentials;
+- project case studies;
+- analytical results;
+- shareable project URLs; and
+- recruiter / hiring-manager review.
+
+### Technical Evidence
+
+**Git / GitHub**
+
+GitHub provides:
+
+- source control;
+- project repositories;
+- technical documentation;
+- notebooks, SQL, code, and analytical outputs;
+- revision history; and
+- supporting evidence for technical review.
+
+### Work Management
+
+**Jira**
+
+Jira is used for:
+
+- backlog organization;
+- sprint / release execution;
+- work-status tracking;
+- activity decomposition; and
+- operational delivery management.
+
+### Project Controls
+
+The project-control environment maintains:
+
+- requirements;
+- activity status;
+- RAID registers;
+- budget and cost data;
+- decisions;
+- approved changes;
+- lessons learned; and
+- release performance.
+
+The Information Radiator consolidates selected information from these authoritative systems without replacing them.
+
+## Information Radiator
+
+The Information Radiator was added through formal change control after the original baseline was established.
+
+Its purpose is to provide a concise management view of:
+
+- activity completion;
+- release performance;
+- cost status;
+- active risks and issues;
+- evidence-package readiness;
+- current release gates;
+- recent accomplishments; and
+- immediate management attention.
+
+<Image
+  src={radiator}
+  alt="PPAD Information Radiator showing Release 2 execution, activity progress, evidence-package status, release controls, risks, cost, and next actions"
+/>
+
+Immediately before publication of the PPAD case study, the Release 2 control state showed:
+
+- **32 of 33 Release 2 activities complete**
+- **73.5 of 77.5 fixed work hours complete**
+- **2 of 3 Release 2 evidence packages complete**
+- PPAD publication as the remaining fixed-scope evidence deliverable
+
+The purpose of the dashboard is not to create a competing source of truth. It is a reporting layer over the controlled registers and delivery systems.
+
+## Release Strategy
+
+PPAD is delivered incrementally rather than waiting for the entire long-term backlog to be completed.
+
+### Release 1 — Usable Portfolio MVP
+
+Release 1 established a professional, deployable portfolio and the project-management / technical infrastructure needed to support future development.
+
+Release 1 achieved:
+
+<div class="table-wrapper">
+  <table>
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th>Result</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Release 1 Activities</td>
+        <td><strong>127 / 127 complete</strong></td>
+      </tr>
+      <tr>
+        <td>Release 1 Fixed Work</td>
+        <td><strong>173.75 / 173.75 hours</strong></td>
+      </tr>
+      <tr>
+        <td>Baseline Target</td>
+        <td>October 26, 2026</td>
+      </tr>
+      <tr>
+        <td>Actual Release Acceptance</td>
+        <td><strong>September 9, 2026</strong></td>
+      </tr>
+      <tr>
+        <td>Schedule Result</td>
+        <td><strong>47 days early</strong></td>
+      </tr>
+      <tr>
+        <td>Cost Baseline</td>
+        <td>$28.75</td>
+      </tr>
+      <tr>
+        <td>Actual Incremental Cost</td>
+        <td><strong>$25.00</strong></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+The schedule result is treated carefully. Finishing early does not automatically mean the original estimates were ideal. It reflects a combination of conservative planning, reuse of existing skills and assets, rapid decision cycles, and lower-than-anticipated implementation friction.
+
+### Release 2 — Portfolio Evidence Expansion
+
+Release 2 focused on deepening the evidence already available rather than immediately building every future capability.
+
+Major Release 2 outcomes included:
+
+- reconstruction and publication of IMF Reserve Analytics;
+- reconstruction and publication of Residential Property Value Prediction;
+- completion of the SQL foundation/environment activities;
+- refinement of public artifact and provenance standards;
+- project-control reconciliation; and
+- publication of PPAD itself as project-management evidence.
+
+### Release 3 — Feedback-Gated Expansion
+
+A major control decision was made not to allow Release 2 development to automatically flow into Release 3.
+
+Additional coursework reconstruction, dedicated SQL/Python capability development, historical-content migration, information-radiator maturity work, and portfolio visual-standardization work were moved behind an external feedback gate.
+
+Release 3 prioritization is intentionally dependent on:
+
+- ACT-273 — Collect External Portfolio Feedback
+- ACT-274 — Evaluate Portfolio Effectiveness
+- ACT-275 — Prioritize Portfolio Improvements
+
+This prevents development effort from expanding simply because additional work can be imagined.
+
+## Scope Control in Practice
+
+PPAD includes two approved change requests that demonstrate how the baseline was actively controlled rather than treated as static paperwork.
+
+### CR-001 — Add the Information Radiator
+
+The Information Radiator was added as a project execution and performance-control deliverable.
+
+The approved change increased scope with minimal expected cost and no adverse Release 1 MVP impact.
+
+<Image
+  src={changeLog}
+  alt="PPAD Change Log showing approved changes including the Information Radiator and Horizon Line de-scope decision"
+/>
+
+### CR-002 — De-scope Horizon Line Analytics Case Study
+
+Horizon Line was originally planned as a portfolio case study.
+
+A source-material assessment determined that reconstruction would require disproportionate retrospective work from sensitive historical financial and operational records, while providing substantial competency overlap with stronger existing projects.
+
+The case study was therefore removed from active execution.
+
+ACT-143 was completed as the go/no-go assessment, while ACT-144 through ACT-152 were retained in the Activity Log as **De-scoped** for auditability rather than deleted.
+
+This reduced:
+
+- reconstruction effort;
+- publication and privacy risk;
+- schedule pressure; and
+- redundant portfolio work.
+
+The decision is an example of scope control serving project value rather than protecting work simply because it appeared in an earlier plan.
+
+## Decision Management
+
+Material technical, release, publication, and scope decisions are recorded in a controlled Decision Log.
+
+Examples include:
+
+- establishing the PPAD Scope Baseline;
+- adopting the layered portfolio-evidence architecture;
+- selecting a static-first implementation strategy;
+- selecting Astro;
+- selecting GitHub Pages;
+- establishing the professional-positioning baseline;
+- approving the public-artifact publication standard;
+- defining Release 2; and
+- refining the Release 2 / Release 3 boundary.
+
+<Image
+  src={decisionLog}
+  alt="PPAD Decision Log showing approved scope, architecture, technology, hosting, publication, and release decisions"
+/>
+
+This provides traceability for why the project evolved rather than relying on reconstructed memory after the fact.
+
+## Risk, Assumption, Issue & Dependency Management
+
+PPAD maintains dedicated registers for:
+
+- risks;
+- assumptions;
+- issues; and
+- dependencies.
+
+The controls distinguish uncertainty from realized problems and from sequencing relationships.
+
+At the Release 2 publication gate:
+
+- **8 risks** remained active or monitored;
+- **0 unresolved issues** were open;
+- **0 current Release 2 dependency blockers** remained; and
+- unvalidated assumptions were explicitly carried forward for future evidence rather than silently treated as facts.
+
+## Cost Management
+
+PPAD was intentionally designed as a low-cost project.
+
+Major cost choices included:
+
+- static-site architecture;
+- GitHub Pages hosting;
+- free/open-source development tools;
+- reuse of existing Microsoft / academic resources;
+- free-first technical platforms where practical; and
+- targeted purchasing only where professional value justified it.
+
+Release 1 recorded:
+
+- **Cost Baseline:** $28.75
+- **Actual Incremental Cost:** $25.00
+- **Project Budget including Management Reserve:** $31.625
+
+The project demonstrates that formal cost management can remain useful even when absolute costs are small. The value is in establishing expected spending, contingency, management reserve, and decision discipline before spending occurs.
+
+## What Changed During Execution
+
+The project evolved substantially after the original baseline, but the changes were controlled.
+
+Examples include:
+
+- adding the Information Radiator through CR-001;
+- selecting Astro and GitHub Pages through documented decisions;
+- purchasing and deploying `jdylanbeckham.com`;
+- reconstructing and publishing multiple analytical case studies;
+- replacing the planned Heart Disease portfolio project with the better-supported Residential Property project;
+- de-scoping Horizon Line through CR-002;
+- deferring additional coursework and dedicated SQL/Python development to Release 3;
+- using external feedback as the gate for future expansion; and
+- protecting Release 2 from visual and content enhancements that did not need to block publication.
+
+The purpose of the controls was not to prevent change.
+
+The purpose was to make change visible, deliberate, and traceable.
+
+## Lessons Demonstrated
+
+PPAD has reinforced several project-management lessons.
+
+### Requirements before execution
+
+A broad objective such as “build a professional portfolio” became manageable only after it was converted into explicit stakeholder, functional, nonfunctional, business, and transition requirements.
+
+### Integrated controls matter
+
+Individual documents can appear correct while the overall control system contains inconsistent dependencies, statuses, or assumptions. Cross-artifact reconciliation became an important quality-control activity.
+
+### Baselines are decision tools
+
+The Scope, Schedule, and Cost Baselines were not created merely as documentation. They provided the reference points needed to decide whether later ideas represented approved work, reprioritization, change, deferral, or de-scope.
+
+### Scope reduction can be successful delivery
+
+Removing Horizon Line was not project failure. It protected privacy, reduced reconstruction effort, and preserved attention for work with stronger employment value.
+
+### A release can be useful before the full backlog is complete
+
+Release 1 created professional value while significant future work remained. Release 2 then strengthened evidence without requiring the entire long-term technical-development backlog to be completed first.
+
+### Future work should earn its priority
+
+Release 3 is deliberately gated behind external feedback. New SQL, Python, content, and visual work should be prioritized based on evidence of portfolio effectiveness rather than on the existence of an unfinished backlog.
+
+## Skills Demonstrated
+
+- Project authorization and governance
+- Stakeholder management
+- Requirements elicitation and traceability
+- Scope definition and control
+- Work Breakdown Structure development
+- WBS Dictionary development
+- Schedule planning and baseline control
+- Cost estimation and baseline management
+- RAID management
+- Decision management
+- Change control
+- Release planning
+- Backlog prioritization
+- Jira
+- Git / GitHub
+- Risk-based publication review
+- Information radiators and performance reporting
+- Lessons learned
+- Technical delivery coordination
+- Portfolio product management
+- Documentation and auditability
+
+## Project Status
+
+PPAD remains an active, multi-release project.
+
+Release 1 has been formally accepted.
+
+Release 2 is focused on completing the current evidence package, with this PPAD case study serving as the final fixed-scope publication deliverable.
+
+Release 3 expansion is intentionally deferred until the external feedback and portfolio-effectiveness cycle determines which additional work is most valuable.
+
+
+## Project Evidence
+
+PPAD was managed using formal project-control artifacts rather than relying solely on the finished portfolio as evidence of execution.
+
+The selected artifacts below demonstrate the project's authorization, baseline management, performance reporting, and change-control processes.
+
+---
+
+**Project Charter**
+
+Defines the project's business need, objectives, governance structure, stakeholders, constraints, success criteria, and initial authorization.
+
+[View Project Charter ↗](/files/projects/ppad/PPAD-Project-Charter.pdf)
+
+---
+
+**Scope Baseline**
+
+Documents the approved project scope and establishes the controlled foundation used to evaluate later additions, deferrals, and de-scoping decisions.
+
+[View Scope Baseline ↗](/files/projects/ppad/PPAD-Scope-Baseline.pdf)
+
+---
+
+**Information Radiator**
+
+Provides the current management view of activity completion, release performance, cost status, evidence-package readiness, risks, and immediate priorities.
+
+[View Information Radiator ↗](/files/projects/ppad/PPAD-Information-Radiator.pdf)
+
+---
+
+**Change & Decision Log**
+
+Provides traceability for material scope, technical, release, and governance decisions made as PPAD evolved from its original baseline.
+
+[View Change & Decision Log ↗](/files/projects/ppad/PPAD-Change-and-Decision-Log.pdf)
+
+---
+
+Additional Jira records, internal registers, working documents, and project-administration artifacts are retained as project records and are not reproduced in full on the public portfolio.
+
+
+
+
+
+
+## Project Provenance
+
+PPAD is a self-directed project created to build the professional portfolio at **jdylanbeckham.com** while simultaneously applying formal project-management practices to a real delivery environment.
+
+Unlike reconstructed academic case studies, PPAD is itself the live project.
+
+Its project controls, decisions, releases, risks, changes, repositories, and published outputs were created as part of the work being documented here.
+
+That makes the case study recursive by design:
+
+> The project used to build the portfolio became one of the portfolio's project-management artifacts.
