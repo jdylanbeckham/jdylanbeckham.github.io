@@ -97,24 +97,70 @@ The ensemble workflow used a **70/30 train-test split** with a fixed random stat
 
 Hyperparameter tuning was performed with **10-fold GridSearchCV** using negative Root Mean Squared Error as the scoring criterion.
 
+
 ## Model Performance
 
 The reconstructed and validated results were:
 
-| Model | RMSE | MAE | MAPE |
-| --- | ---: | ---: | ---: |
-| Linear Regression 1 | $65,029.86 | $45,056.80 | 19.51% |
-| Linear Regression 2 | $64,834.34 | $44,709.81 | 19.42% |
-| Linear Regression 3 | **$56,677.50** | $39,895.53 | 16.98% |
-| Bagging | $64,555.79 | $39,467.93 | 17.40% |
-| Random Forest | $57,218.84 | **$36,001.77** | **16.37%** |
-| Gradient Boosting | $76,603.79 | $42,463.16 | 18.23% |
+<div class="table-wrapper">
+  <table>
+    <thead>
+      <tr>
+        <th>Model</th>
+        <th>RMSE</th>
+        <th>MAE</th>
+        <th>MAPE</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Linear Regression 1</td>
+        <td>$65,029.86</td>
+        <td>$45,056.80</td>
+        <td>19.51%</td>
+      </tr>
+      <tr>
+        <td>Linear Regression 2</td>
+        <td>$64,834.34</td>
+        <td>$44,709.81</td>
+        <td>19.42%</td>
+      </tr>
+      <tr>
+        <td>Linear Regression 3</td>
+        <td><strong>$56,677.50</strong></td>
+        <td>$39,895.53</td>
+        <td>16.98%</td>
+      </tr>
+      <tr>
+        <td>Bagging</td>
+        <td>$64,555.79</td>
+        <td>$39,467.93</td>
+        <td>17.40%</td>
+      </tr>
+      <tr>
+        <td>Random Forest</td>
+        <td>$57,218.84</td>
+        <td><strong>$36,001.77</strong></td>
+        <td><strong>16.37%</strong></td>
+      </tr>
+      <tr>
+        <td>Gradient Boosting</td>
+        <td>$76,603.79</td>
+        <td>$42,463.16</td>
+        <td>18.23%</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 No single model dominated every evaluation metric.
 
 **Linear Regression Model 3 produced the lowest RMSE**, while **Random Forest produced the lowest MAE and MAPE**.
 
 This makes model selection dependent on the business objective and the type of prediction error considered most important rather than on a single universal ranking.
+
+
+
 
 <Image
   src={modelPerformance}
