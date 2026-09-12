@@ -1,0 +1,232 @@
+---
+title: Residential Property Value Prediction
+author: J. Dylan Beckham
+description: Reconstruction and validation of a residential property valuation project using Python, linear regression, Random Forest, Bagging, and Gradient Boosting, with reproducible analysis and portfolio-ready visualizations.
+tags: ['Data Analytics', 'Python', 'Machine Learning', 'Regression', 'Random Forest', 'Gradient Boosting', 'Data Visualization']
+featured: true
+---
+
+import { Image } from 'astro:assets'
+import salePriceDistribution from '../../assets/images/projects/residential-property-value-prediction/sale_price_distribution.png'
+import modelPerformance from '../../assets/images/projects/residential-property-value-prediction/model_performance_comparison.png'
+import featureImportance from '../../assets/images/projects/residential-property-value-prediction/random_forest_feature_importance.png'
+
+## Project Overview
+
+Reconstructed and validated an earlier University of North Texas analytics project focused on predicting residential property sale values.
+
+The original coursework used Python to compare interpretable linear regression models with nonlinear ensemble tree methods using residential property data associated with Iowa State University in Ames, Iowa.
+
+For the portfolio version, the original analytical workflow was preserved, made portable, executed from a clean environment, validated end to end, and documented with portfolio-ready visualizations.
+
+## Project Objectives
+
+The reconstruction focused on:
+
+- preserving the analytical scope of the original coursework;
+- rebuilding the notebook so it could execute from repository-relative paths;
+- validating the original data-preparation and modeling workflow;
+- comparing regression and ensemble approaches using the original evaluation metrics;
+- documenting model-performance trade-offs rather than forcing a single universal winner;
+- regenerating key visualizations for portfolio presentation; and
+- preserving the validated analytical workflow in a public Git repository.
+
+## Data Preparation
+
+The source workbook contained residential property transactions from multiple U.S. college-town markets.
+
+The original project narrowed the analysis to properties associated with **Iowa State University in Ames, Iowa**, producing a working dataset of **211 residential transactions**.
+
+The final modeling workflow used:
+
+- `Beds`
+- `Baths`
+- `Sqft_home`
+- `Sqft_lot`
+- `Type`
+- `Age`
+
+The target variable was:
+
+**`Sale_amount`**
+
+Property `Type` was converted to a binary Single Family / Non-Single Family indicator, while `Age` was derived from `Build_year`.
+
+The analysis also evaluated skew in the target and predictor distributions and introduced logarithmic transformations in the strongest linear-regression specification.
+
+## Sale Price Distribution
+
+The Ames sale-price distribution is strongly right-skewed, with a relatively small number of high-value properties extending well beyond the center of the distribution.
+
+This pattern helped motivate the use of logarithmic transformations in the third regression model.
+
+<Image
+  src={salePriceDistribution}
+  alt="Histogram showing the distribution of residential sale prices in Ames, Iowa"
+/>
+
+## Modeling Workflow
+
+The project compared three Ordinary Least Squares regression specifications with three ensemble-tree approaches.
+
+### Linear Regression
+
+**Model 1**
+
+`Sale_amount ~ Beds + Baths + Sqft_home + Sqft_lot + Type + Age`
+
+**Model 2**
+
+`Sale_amount ~ Baths + Sqft_home + Sqft_lot + Age`
+
+**Model 3**
+
+`log(Sale_amount) ~ Baths + log(Sqft_home) + log(Sqft_lot) + Age`
+
+Model 3 introduced logarithmic transformations to better account for skew in the sale-price and square-footage variables.
+
+### Ensemble Models
+
+The ensemble analysis evaluated:
+
+- a Bagging-style tree ensemble;
+- Random Forest; and
+- Gradient Boosting.
+
+The ensemble workflow used a **70/30 train-test split** with a fixed random state for reproducibility.
+
+Hyperparameter tuning was performed with **10-fold GridSearchCV** using negative Root Mean Squared Error as the scoring criterion.
+
+## Model Performance
+
+The reconstructed and validated results were:
+
+| Model | RMSE | MAE | MAPE |
+| --- | ---: | ---: | ---: |
+| Linear Regression 1 | $65,029.86 | $45,056.80 | 19.51% |
+| Linear Regression 2 | $64,834.34 | $44,709.81 | 19.42% |
+| Linear Regression 3 | **$56,677.50** | $39,895.53 | 16.98% |
+| Bagging | $64,555.79 | $39,467.93 | 17.40% |
+| Random Forest | $57,218.84 | **$36,001.77** | **16.37%** |
+| Gradient Boosting | $76,603.79 | $42,463.16 | 18.23% |
+
+No single model dominated every evaluation metric.
+
+**Linear Regression Model 3 produced the lowest RMSE**, while **Random Forest produced the lowest MAE and MAPE**.
+
+This makes model selection dependent on the business objective and the type of prediction error considered most important rather than on a single universal ranking.
+
+<Image
+  src={modelPerformance}
+  alt="Model performance comparison showing RMSE, MAE, and MAPE across regression and ensemble models"
+/>
+
+## Feature Importance
+
+Random Forest identified **home square footage** as the dominant predictor in the ensemble analysis.
+
+Bathrooms, lot size, and property age also contributed meaningfully, while bedrooms and the simplified property-type indicator were less influential.
+
+<Image
+  src={featureImportance}
+  alt="Random Forest feature importance chart for the residential property valuation model"
+/>
+
+## Data Validation & Analytical Limitations
+
+The reconstruction confirmed the original analytical workflow while also highlighting several limitations that are important when interpreting the results.
+
+The analysis used only **211 observations from Ames, Iowa**, so the results should not be interpreted as a nationally generalizable residential valuation model.
+
+Additional limitations include:
+
+- the relatively small modeling sample;
+- simplification of property type into a binary indicator;
+- linear-model assumptions including possible multicollinearity;
+- sensitivity to highly priced observations and skewed variables; and
+- the interpretability trade-off between conventional regression and ensemble models.
+
+The source workbook contains additional college-town markets, but expanding the analysis beyond Ames would constitute new analytical development rather than reconstruction of the original coursework.
+
+That extension has therefore been reserved for a future project release.
+
+## Reconstruction Improvements
+
+The portfolio version improves the original project without replacing it with a different analysis.
+
+Improvements include:
+
+- replacement of local machine-specific file paths with repository-relative paths;
+- preservation of the original modeling methodology;
+- resolution of Windows multiprocessing issues during GridSearchCV execution;
+- clean-kernel validation using a complete Restart & Run All execution;
+- regenerated portfolio-quality analytical visualizations;
+- improved documentation of model-performance trade-offs;
+- explicit documentation of analytical limitations and project provenance; and
+- separation of public portfolio artifacts from original course-provided and group source materials.
+
+## Skills Demonstrated
+
+- Python
+- Jupyter Notebook
+- pandas
+- NumPy
+- statsmodels
+- scikit-learn
+- Exploratory Data Analysis
+- Data cleaning and preprocessing
+- Feature engineering
+- Linear regression
+- Ensemble learning
+- Random Forest
+- Gradient Boosting
+- Cross-validation
+- Hyperparameter tuning
+- Model evaluation
+- Feature importance analysis
+- Data visualization
+- Git / GitHub version control
+- Technical documentation
+- Reproducible analytical workflows
+
+## Project Status
+
+Original coursework reconstruction complete.
+
+The reconstructed project now includes:
+
+- a validated Python notebook;
+- reproducible repository-relative workflow;
+- regression and ensemble-model evaluation;
+- portfolio-ready visualizations;
+- documented analytical limitations;
+- public-facing technical documentation; and
+- a dedicated GitHub repository.
+
+## Project Provenance
+
+This analysis originated as a **group academic project** for ADTA 4230 — Data Analytics and Computational Statistics 2 at the University of North Texas.
+
+The reconstruction, reproducibility validation, documentation improvements, repository development, and portfolio presentation were completed subsequently as part of the Portfolio Project & Analytics Development initiative.
+
+The portfolio version preserves the original analytical work while clearly separating the later reconstruction and validation effort.
+
+<section aria-labelledby="technical-evidence">
+  <h2 id="technical-evidence">Technical Evidence</h2>
+
+  <p>
+    The public project repository contains the validated reconstruction notebook,
+    model-evaluation workflow, portfolio visualizations, dependency documentation,
+    and technical notes supporting the reconstructed analysis.
+  </p>
+
+  <p>
+    <a
+      href="https://github.com/jdylanbeckham/residential-property-value-prediction"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      View GitHub Repository ↗
+    </a>
+  </p>
+</section>
