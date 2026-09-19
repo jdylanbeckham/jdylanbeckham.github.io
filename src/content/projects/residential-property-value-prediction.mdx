@@ -1,43 +1,58 @@
 ---
 title: Residential Property Value Prediction
 author: J. Dylan Beckham
-description: Reconstruction and validation of a residential property valuation project using Python, linear regression, Random Forest, Bagging, and Gradient Boosting, with reproducible analysis and portfolio-ready visualizations.
+description: Multi-market residential property value prediction using 10,659 transactions across 50 U.S. college-town housing markets, with regression, Random Forest, Bagging, Gradient Boosting, cross-validation, and feature-importance analysis.
 tags: ['Data Analytics', 'Python', 'Machine Learning', 'Regression', 'Random Forest', 'Gradient Boosting', 'Data Visualization']
 featured: false
 ---
 
 import { Image } from 'astro:assets'
-import salePriceDistribution from '../../assets/images/projects/residential-property-value-prediction/sale_price_distribution.png'
-import modelPerformance from '../../assets/images/projects/residential-property-value-prediction/model_performance_comparison.png'
-import featureImportance from '../../assets/images/projects/residential-property-value-prediction/random_forest_feature_importance.png'
+import logSaleDistribution from '../../assets/images/projects/residential-property-value-prediction/residential_value_log_sale_distribution.png'
+import modelPerformance from '../../assets/images/projects/residential-property-value-prediction/residential_value_model_rmse.png'
+import featureImportance from '../../assets/images/projects/residential-property-value-prediction/residential_value_feature_importance.png'
 
 ## Project Overview
 
-Reconstructed and validated an earlier University of North Texas analytics project focused on predicting residential property sale values.
+Rebuilt and expanded an earlier University of North Texas residential property valuation project to use the **complete dataset of 10,659 residential transactions across 50 U.S. college-town housing markets**.
 
-The original coursework used Python to compare interpretable linear regression models with nonlinear ensemble tree methods using residential property data associated with Iowa State University in Ames, Iowa.
+The original coursework analyzed only 211 transactions associated with Iowa State University in Ames, Iowa. The expanded portfolio version revisits the same underlying dataset with a broader analytical question:
 
-For the portfolio version, the original analytical workflow was preserved, made portable, executed from a clean environment, validated end to end, and documented with portfolio-ready visualizations.
+**How well can residential property values be predicted when property characteristics and major differences between local housing markets are modeled together?**
+
+The rebuilt analysis uses Python to compare multiple linear-regression specifications with Bagging, Random Forest, and Gradient Boosting models while preserving all 10,659 observations.
 
 ## Project Objectives
 
-The reconstruction focused on:
+The expanded analysis focused on:
 
-- preserving the analytical scope of the original coursework;
-- rebuilding the notebook so it could execute from repository-relative paths;
-- validating the original data-preparation and modeling workflow;
-- comparing regression and ensemble approaches using the original evaluation metrics;
-- documenting model-performance trade-offs rather than forcing a single universal winner;
-- regenerating key visualizations for portfolio presentation; and
-- preserving the validated analytical workflow in a public Git repository.
+- replacing the original single-market sample with the complete 10,659-transaction dataset;
+- evaluating residential values across 50 distinct housing markets;
+- identifying and retaining legitimate high-value and large-property observations rather than automatically removing them as outliers;
+- reducing extreme skew through justified logarithmic transformations;
+- explicitly controlling for housing-market location;
+- comparing interpretable regression models with nonlinear ensemble methods;
+- evaluating models using RMSE, MAE, MAPE, R², cross-validation, and held-out testing;
+- identifying the strongest predictors of residential property value; and
+- producing a reproducible, portfolio-ready analytical workflow.
 
-## Data Preparation
+## Dataset
 
-The source workbook contained residential property transactions from multiple U.S. college-town markets.
+The source workbook contains residential transactions associated with **50 universities and 50 corresponding college-town housing markets**.
 
-The original project narrowed the analysis to properties associated with **Iowa State University in Ames, Iowa**, producing a working dataset of **211 residential transactions**.
+The complete analytical dataset contains:
 
-The final modeling workflow used:
+- **10,659 residential transactions**
+- **50 towns**
+- **50 universities**
+- **3 property types**
+- no missing values in the modeled variables; and
+- no duplicate records.
+
+Because each town corresponded one-to-one with a university in the source data, `Town` was used as the geographic market variable rather than including both fields and creating redundant location controls.
+
+### Core Variables
+
+The primary property characteristics were:
 
 - `Beds`
 - `Baths`
@@ -45,62 +60,171 @@ The final modeling workflow used:
 - `Sqft_lot`
 - `Type`
 - `Age`
+- `Town`
 
-The target variable was:
+The prediction target was:
 
 **`Sale_amount`**
 
-Property `Type` was converted to a binary Single Family / Non-Single Family indicator, while `Age` was derived from `Build_year`.
+Property age was calculated at the **time of sale**, rather than using the property's age at the current date.
 
-The analysis also evaluated skew in the target and predictor distributions and introduced logarithmic transformations in the strongest linear-regression specification.
+## Data Preparation and Outlier Review
+
+Exploratory analysis showed substantial right skew in several variables.
+
+Observed skewness included approximately:
+
+- `Sale_amount`: **5.87**
+- `Sqft_home`: **53.8**
+- `Sqft_lot`: **19.2**
+
+The full dataset also contained unusually large residential properties, including a multifamily transaction with more than 140,000 square feet.
+
+Rather than automatically deleting these records, the analysis inspected them individually and retained them when the surrounding fields were internally consistent.
+
+Logarithmic transformations were therefore created for:
+
+- `Sale_amount`
+- `Sqft_home`
+- `Sqft_lot`
+
+The transformation reduced sale-price skew from approximately **5.87 to 0.36** and home-square-footage skew from approximately **53.8 to 0.36**, allowing the analysis to preserve the complete dataset while limiting the influence of extremely large observations.
 
 ## Sale Price Distribution
 
-The Ames sale-price distribution is strongly right-skewed, with a relatively small number of high-value properties extending well beyond the center of the distribution.
+The raw residential sale-price distribution was heavily right-skewed because a relatively small number of high-value properties extended far beyond the center of the market.
 
-This pattern helped motivate the use of logarithmic transformations in the third regression model.
+A logarithmic transformation produced a substantially more balanced distribution and became the basis of the strongest linear-regression specification.
 
 <Image
-  src={salePriceDistribution}
-  alt="Histogram showing the distribution of residential sale prices in Ames, Iowa"
+  src={logSaleDistribution}
+  alt="Distribution of log-transformed residential sale prices across 10,659 transactions"
 />
 
-## Modeling Workflow
+## Regression Modeling
 
-The project compared three Ordinary Least Squares regression specifications with three ensemble-tree approaches.
+Three Ordinary Least Squares specifications were evaluated.
 
-### Linear Regression
+### Model 1 — Raw-Dollar Baseline
 
-**Model 1**
+The first model predicted sale price directly using the original property measurements plus market and property-type controls.
 
-`Sale_amount ~ Beds + Baths + Sqft_home + Sqft_lot + Type + Age`
+`Sale_amount ~ Beds + Baths + Sqft_home + Sqft_lot + C(Type) + C(Town) + Age`
 
-**Model 2**
+The model produced an in-sample R² of approximately **0.720**, but residual analysis showed substantial heteroskedasticity as property values increased.
 
-`Sale_amount ~ Baths + Sqft_home + Sqft_lot + Age`
+### Model 2 — Raw-Dollar Model with Transformed Property Size
 
-**Model 3**
+The second specification retained sale price in dollars while transforming the highly skewed square-footage predictors.
 
-`log(Sale_amount) ~ Baths + log(Sqft_home) + log(Sqft_lot) + Age`
+`Sale_amount ~ Baths + Log_Sqft_home + Log_Sqft_lot + C(Type) + C(Town) + Age`
 
-Model 3 introduced logarithmic transformations to better account for skew in the sale-price and square-footage variables.
+Its in-sample R² declined to approximately **0.696**, and the residual pattern remained strongly heteroskedastic.
 
-### Ensemble Models
+### Model 3 — Log-Transformed Sale Value
 
-The ensemble analysis evaluated:
+The third model transformed both the target and major size predictors.
 
-- a Bagging-style tree ensemble;
-- Random Forest; and
-- Gradient Boosting.
+`Log_Sale_amount ~ Baths + Log_Sqft_home + Log_Sqft_lot + C(Type) + C(Town) + Age`
 
-The ensemble workflow used a **70/30 train-test split** with a fixed random state for reproducibility.
+This specification produced:
 
-Hyperparameter tuning was performed with **10-fold GridSearchCV** using negative Root Mean Squared Error as the scoring criterion.
+- **R²: approximately 0.777**
+- **Adjusted R²: approximately 0.776**
+- substantially improved residual behavior; and
+- a more balanced treatment of properties across different price levels.
 
+HC3 heteroskedasticity-robust standard errors were also evaluated for the regression specifications.
 
-## Model Performance
+## Regression Cross-Validation
 
-The reconstructed and validated results were:
+The three regression models were compared using **10-fold cross-validation with shuffled, reproducible folds**.
+
+Because Model 3 predicts log sale values, its predictions were converted back into actual dollars using a **Duan smearing correction** before calculating prediction errors.
+
+<div class="table-wrapper">
+  <table>
+    <thead>
+      <tr>
+        <th>Regression Model</th>
+        <th>RMSE</th>
+        <th>MAE</th>
+        <th>MAPE</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Model 1 — Raw-Dollar Baseline</td>
+        <td>$197,660.95</td>
+        <td><strong>$91,374.85</strong></td>
+        <td>32.25%</td>
+      </tr>
+      <tr>
+        <td>Model 2 — Transformed Property Size</td>
+        <td><strong>$190,049.98</strong></td>
+        <td>$102,127.61</td>
+        <td>39.76%</td>
+      </tr>
+      <tr>
+        <td>Model 3 — Log Sale Value</td>
+        <td>$599,415.53</td>
+        <td>$93,723.30</td>
+        <td><strong>27.52%</strong></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+The cross-validation results illustrate an important modeling trade-off.
+
+Model 1 produced the lowest typical absolute-dollar error, Model 2 produced the lowest RMSE, and Model 3 produced the lowest percentage error.
+
+Model 3 therefore improved fit and relative prediction consistency across the broader housing market, but very high-value transactions created large retransformed dollar errors.
+
+## Ensemble Tree Models
+
+The nonlinear modeling stage evaluated three ensemble approaches:
+
+- **Bagging Regressor**
+- **Random Forest Regressor**
+- **Gradient Boosting Regressor**
+
+Categorical `Town` and `Type` variables were one-hot encoded, producing a **58-column predictor matrix**.
+
+The complete dataset was then divided into:
+
+- **8,527 training observations — 80%**
+- **2,132 held-out test observations — 20%**
+
+The same held-out test set was used for all three ensemble models.
+
+Hyperparameters were tuned using `GridSearchCV` on the training data only.
+
+### Bagging Regressor
+
+The best Bagging configuration used:
+
+- 200 estimators
+- unrestricted tree depth
+- 80% maximum sample size
+
+### Random Forest
+
+The strongest Random Forest configuration used:
+
+- 400 estimators
+- unrestricted maximum depth
+- square-root feature sampling
+
+### Gradient Boosting
+
+The strongest Gradient Boosting configuration used:
+
+- 200 estimators
+- learning rate of 0.10
+- maximum tree depth of 3
+
+## Ensemble Model Performance
 
 <div class="table-wrapper">
   <table>
@@ -110,106 +234,163 @@ The reconstructed and validated results were:
         <th>RMSE</th>
         <th>MAE</th>
         <th>MAPE</th>
+        <th>R²</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>Linear Regression 1</td>
-        <td>$65,029.86</td>
-        <td>$45,056.80</td>
-        <td>19.51%</td>
-      </tr>
-      <tr>
-        <td>Linear Regression 2</td>
-        <td>$64,834.34</td>
-        <td>$44,709.81</td>
-        <td>19.42%</td>
-      </tr>
-      <tr>
-        <td>Linear Regression 3</td>
-        <td><strong>$56,677.50</strong></td>
-        <td>$39,895.53</td>
-        <td>16.98%</td>
-      </tr>
-      <tr>
-        <td>Bagging</td>
-        <td>$64,555.79</td>
-        <td>$39,467.93</td>
-        <td>17.40%</td>
-      </tr>
-      <tr>
-        <td>Random Forest</td>
-        <td>$57,218.84</td>
-        <td><strong>$36,001.77</strong></td>
-        <td><strong>16.37%</strong></td>
+        <td><strong>Random Forest</strong></td>
+        <td><strong>$207,602.31</strong></td>
+        <td><strong>$75,651.69</strong></td>
+        <td>27.09%</td>
+        <td><strong>0.6926</strong></td>
       </tr>
       <tr>
         <td>Gradient Boosting</td>
-        <td>$76,603.79</td>
-        <td>$42,463.16</td>
-        <td>18.23%</td>
+        <td>$209,040.04</td>
+        <td>$81,917.90</td>
+        <td>29.50%</td>
+        <td>0.6884</td>
+      </tr>
+      <tr>
+        <td>Bagging Regressor</td>
+        <td>$215,824.95</td>
+        <td>$78,242.53</td>
+        <td><strong>26.92%</strong></td>
+        <td>0.6678</td>
       </tr>
     </tbody>
   </table>
 </div>
 
-No single model dominated every evaluation metric.
+Random Forest provided the strongest overall held-out test performance.
 
-**Linear Regression Model 3 produced the lowest RMSE**, while **Random Forest produced the lowest MAE and MAPE**.
+It produced the:
 
-This makes model selection dependent on the business objective and the type of prediction error considered most important rather than on a single universal ranking.
+- lowest RMSE;
+- lowest MAE; and
+- highest R².
 
+Bagging produced a slightly lower MAPE, outperforming Random Forest by only **0.17 percentage points** on that metric.
 
-
+Random Forest was therefore selected as the strongest overall ensemble model rather than because it dominated every possible measure.
 
 <Image
   src={modelPerformance}
-  alt="Model performance comparison showing RMSE, MAE, and MAPE across regression and ensemble models"
+  alt="Comparison of prediction RMSE for Random Forest, Gradient Boosting, and Bagging models"
 />
 
-## Feature Importance
+## What Drives Residential Property Value?
 
-Random Forest identified **home square footage** as the dominant predictor in the ensemble analysis.
+The expanded model produced a materially different insight from the original Ames-only analysis.
 
-Bathrooms, lot size, and property age also contributed meaningfully, while bedrooms and the simplified property-type indicator were less influential.
+After the 50 town indicators were aggregated back into a single market-location feature group, Random Forest importance was approximately:
+
+<div class="table-wrapper">
+  <table>
+    <thead>
+      <tr>
+        <th>Predictor Group</th>
+        <th>Random Forest Importance</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Town / Housing Market</strong></td>
+        <td><strong>45.48%</strong></td>
+      </tr>
+      <tr>
+        <td>Home Square Footage</td>
+        <td>19.47%</td>
+      </tr>
+      <tr>
+        <td>Bathrooms</td>
+        <td>11.69%</td>
+      </tr>
+      <tr>
+        <td>Lot Square Footage</td>
+        <td>8.71%</td>
+      </tr>
+      <tr>
+        <td>Property Age</td>
+        <td>8.21%</td>
+      </tr>
+      <tr>
+        <td>Bedrooms</td>
+        <td>4.89%</td>
+      </tr>
+      <tr>
+        <td>Property Type</td>
+        <td>1.55%</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <Image
   src={featureImportance}
-  alt="Random Forest feature importance chart for the residential property valuation model"
+  alt="Random Forest feature importance showing housing-market location as the dominant predictor group"
 />
 
-## Data Validation & Analytical Limitations
+The result shows that **location was collectively the dominant source of predictive information**, followed by home size.
 
-The reconstruction confirmed the original analytical workflow while also highlighting several limitations that are important when interpreting the results.
+Bathrooms, lot size, property age, and bedroom count contributed additional information once differences between local housing markets were represented explicitly.
 
-The analysis used only **211 observations from Ames, Iowa**, so the results should not be interpreted as a nationally generalizable residential valuation model.
+These percentages are model-based feature importances, not causal effects. They describe how the trained Random Forest used the available predictors; they should not be interpreted as percentages of a property's price caused by each characteristic.
 
-Additional limitations include:
+## Key Findings
 
-- the relatively small modeling sample;
-- simplification of property type into a binary indicator;
-- linear-model assumptions including possible multicollinearity;
-- sensitivity to highly priced observations and skewed variables; and
-- the interpretability trade-off between conventional regression and ensemble models.
+The expanded analysis produced four primary findings.
 
-The source workbook contains additional college-town markets, but expanding the analysis beyond Ames would constitute new analytical development rather than reconstruction of the original coursework.
+**1. Housing markets matter substantially.**  
+Town-level market indicators collectively represented approximately 45% of Random Forest feature importance.
 
-That extension has therefore been reserved for a future project release.
+**2. Home size remained the strongest individual physical predictor.**  
+Home square footage accounted for approximately 19% of overall Random Forest feature importance.
 
-## Reconstruction Improvements
+**3. Log transformation substantially improved the linear-model specification.**  
+The log-price regression achieved an R² of approximately 0.78 and substantially improved residual behavior compared with the raw-dollar specifications.
 
-The portfolio version improves the original project without replacing it with a different analysis.
+**4. Model selection depends on the error being optimized.**  
+No model universally dominated every metric. Random Forest provided the strongest overall held-out ensemble performance, while other specifications performed better on individual error measures.
+
+## Analytical Limitations
+
+The expanded project substantially improves on the original single-market analysis, but it is not a production appraisal system.
+
+Important limitations include:
+
+- the dataset is concentrated in college-town housing markets rather than representing all U.S. residential transactions;
+- important valuation variables such as neighborhood-level characteristics, renovation quality, school districts, interest rates, taxes, and detailed property condition are not included;
+- one-hot encoded town indicators represent observed market differences but do not explain the economic causes of those differences;
+- high-value and unusually large properties create substantial absolute-dollar prediction errors;
+- Random Forest feature importance is predictive rather than causal; and
+- evaluation results depend on the specific training/test and cross-validation procedures used.
+
+The model should therefore be interpreted as an analytical demonstration of residential-value prediction across heterogeneous markets rather than as a professional appraisal or automated valuation product.
+
+## Reconstruction and Expansion Improvements
+
+The portfolio release extends the original academic project substantially.
 
 Improvements include:
 
-- replacement of local machine-specific file paths with repository-relative paths;
-- preservation of the original modeling methodology;
-- resolution of Windows multiprocessing issues during GridSearchCV execution;
-- clean-kernel validation using a complete Restart & Run All execution;
-- regenerated portfolio-quality analytical visualizations;
-- improved documentation of model-performance trade-offs;
-- explicit documentation of analytical limitations and project provenance; and
-- separation of public portfolio artifacts from original course-provided and group source materials.
+- expansion from **211 Ames observations to all 10,659 transactions**;
+- expansion from one housing market to **50 college-town markets**;
+- correction of property age to reflect age at time of sale;
+- retention and inspection of extreme observations rather than arbitrary deletion;
+- logarithmic transformation of heavily skewed variables;
+- explicit market-location controls;
+- preservation of all three property types rather than binary simplification;
+- reproducible 10-fold regression cross-validation;
+- Duan smearing correction for retransformed log predictions;
+- proper implementation of a Bagging Regressor;
+- tuned Random Forest and Gradient Boosting models;
+- consistent 80/20 held-out testing for ensemble comparison;
+- grouped feature-importance analysis;
+- repository-relative data paths;
+- portfolio-ready visualizations; and
+- expanded technical documentation and limitations.
 
 ## Skills Demonstrated
 
@@ -222,13 +403,18 @@ Improvements include:
 - Exploratory Data Analysis
 - Data cleaning and preprocessing
 - Feature engineering
+- Log transformations
 - Linear regression
-- Ensemble learning
+- Heteroskedasticity-robust inference
+- Bagging
 - Random Forest
 - Gradient Boosting
+- One-hot encoding
 - Cross-validation
 - Hyperparameter tuning
+- GridSearchCV
 - Model evaluation
+- RMSE / MAE / MAPE / R²
 - Feature importance analysis
 - Data visualization
 - Git / GitHub version control
@@ -237,33 +423,35 @@ Improvements include:
 
 ## Project Status
 
-Original coursework reconstruction complete.
+Expanded portfolio analysis complete.
 
-The reconstructed project now includes:
+The project now includes:
 
-- a validated Python notebook;
-- reproducible repository-relative workflow;
-- regression and ensemble-model evaluation;
-- portfolio-ready visualizations;
-- documented analytical limitations;
-- public-facing technical documentation; and
-- a dedicated GitHub repository.
+- the full 10,659-transaction analytical dataset;
+- a reconstructed and expanded Python notebook;
+- three regression specifications;
+- three ensemble models;
+- cross-validation and held-out test evaluation;
+- feature-importance analysis;
+- portfolio visualizations;
+- documented analytical limitations; and
+- a dedicated public GitHub repository.
 
 ## Project Provenance
 
-This analysis originated as a **group academic project** for ADTA 4230 — Data Analytics and Computational Statistics 2 at the University of North Texas.
+This project originated as a **group academic project** for ADTA 4230 — Data Analytics and Computational Statistics 2 at the University of North Texas.
 
-The reconstruction, reproducibility validation, documentation improvements, repository development, and portfolio presentation were completed subsequently as part of the Portfolio Project & Analytics Development initiative.
+The original academic analysis focused on the Iowa State University / Ames subset of the source workbook.
 
-The portfolio version preserves the original analytical work while clearly separating the later reconstruction and validation effort.
+The subsequent reconstruction and portfolio expansion—including use of the complete 10,659-transaction dataset, multi-market modeling, revised preprocessing, model validation, repository development, technical documentation, and public-facing presentation—were completed as part of the Portfolio Project & Analytics Development initiative.
 
 <section aria-labelledby="technical-evidence">
   <h2 id="technical-evidence">Technical Evidence</h2>
 
   <p>
-    The public project repository contains the validated reconstruction notebook,
-    model-evaluation workflow, portfolio visualizations, dependency documentation,
-    and technical notes supporting the reconstructed analysis.
+    The public project repository contains the expanded analysis notebook,
+    regression and ensemble-model workflows, portfolio visualizations,
+    dependency documentation, and supporting technical notes.
   </p>
 
   <p>
