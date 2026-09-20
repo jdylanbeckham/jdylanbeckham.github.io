@@ -42,6 +42,11 @@ colors: {
       },
       {
         type: 'link',
+        label: 'Writing',
+        href: '/writing',
+      },
+      {
+        type: 'link',
         label: 'Resume',
         href: '/resume',
       },

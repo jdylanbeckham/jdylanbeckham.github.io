@@ -1,0 +1,170 @@
+---
+import DefaultLayout from '@layouts/DefaultLayout.astro'
+import PageHeader from '@components/PageHeader.astro'
+import { Badge, Link } from 'accessible-astro-components'
+
+interface Props {
+  title: string
+  description: string
+  author: string
+  publishedDate: Date
+  publication?: string
+  series?: string
+  category: string
+  tags?: string[]
+  historical?: boolean
+  originalUrl?: string
+  archivePdf?: string
+}
+
+const {
+  title,
+  description,
+  author,
+  publishedDate,
+  publication,
+  series,
+  category,
+  tags = [],
+  historical = false,
+  originalUrl,
+  archivePdf,
+} = Astro.props
+
+const displayDate = publishedDate.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+})
+
+const machineDate = publishedDate.toISOString().slice(0, 10)
+---
+
+<DefaultLayout
+  title={title}
+  description={description}
+  author={author}
+  type="article"
+>
+  <PageHeader
+    title={title}
+    subtitle={description}
+    bgType="bordered"
+  />
+
+  <section class="my-10">
+    <div class="container">
+      <div class="writing-column">
+        <div class="mb-5 flex flex-wrap gap-2">
+          {historical && <Badge>Historical Archive</Badge>}
+          <Badge>{category}</Badge>
+          {tags.map((tag) => <Badge>{tag}</Badge>)}
+        </div>
+
+        <div class="archive-meta border-y py-5">
+          <p class="mb-2">
+            <strong>By {author}</strong>
+          </p>
+
+          <p class="mb-2">
+            <time datetime={machineDate}>{displayDate}</time>
+            {publication && <> · Originally published on {publication}</>}
+          </p>
+
+          {series && (
+            <p class="mb-2">
+              Series: {series}
+            </p>
+          )}
+
+          {(originalUrl || archivePdf) && (
+            <div class="mt-4 flex flex-wrap gap-x-5 gap-y-2">
+              {originalUrl && (
+                <Link href={originalUrl} isExternal>
+                  View original publication
+                </Link>
+              )}
+
+              {archivePdf && (
+                <Link href={archivePdf}>
+                  View archived PDF
+                </Link>
+              )}
+            </div>
+          )}
+        </div>
+
+        {historical && (
+          <aside class="archive-note my-8 border-l-4 pl-5">
+            <strong>Archive note:</strong> This article is preserved from my
+            2013–2014 Quiet Speculation column. Original wording and historical
+            market context are retained. Surviving article imagery has been
+            restored where available, and formatting has been adapted for
+            readability on the current site.
+          </aside>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section class="my-12">
+    <div class="container">
+      <article class="writing-column space-content">
+        <slot />
+      </article>
+    </div>
+  </section>
+
+  <section class="my-20">
+    <div class="container">
+      <div class="writing-column border-t pt-8">
+        <Link
+          href="/writing"
+          isButton
+          animateOnHover
+          animationType="nudge"
+        >
+          Back to Writing
+        </Link>
+      </div>
+    </div>
+  </section>
+</DefaultLayout>
+
+<style lang="scss" is:global>
+  .writing-column {
+    max-width: 82ch;
+  }
+
+  .archive-meta {
+    color: var(--foreground-color);
+  }
+
+  .archive-note {
+    max-width: 75ch;
+  }
+
+  .writing-column .archive-image {
+    margin-block: 2rem;
+    text-align: center;
+  }
+
+  .writing-column .archive-image img {
+    display: block;
+    margin-inline: auto;
+    block-size: auto;
+    max-inline-size: 100%;
+  }
+
+  .writing-column .archive-image--card img {
+    inline-size: min(100%, 320px);
+  }
+
+  .writing-column .archive-image--feature img {
+    inline-size: min(100%, 360px);
+  }
+
+  .writing-column .archive-image--wide img {
+    inline-size: min(100%, 680px);
+  }
+</style>

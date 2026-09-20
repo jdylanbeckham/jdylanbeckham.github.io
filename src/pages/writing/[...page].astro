@@ -1,0 +1,115 @@
+---
+import DefaultLayout from '@layouts/DefaultLayout.astro'
+import PageHeader from '@components/PageHeader.astro'
+import { Badge, Link, Pagination } from 'accessible-astro-components'
+import { getCollection } from 'astro:content'
+import type { GetStaticPaths, Page } from 'astro'
+import type { CollectionEntry } from 'astro:content'
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const writing = await getCollection('writing')
+
+  const sortedWriting = writing.sort(
+    (a, b) =>
+      b.data.publishedDate.getTime() - a.data.publishedDate.getTime()
+  )
+
+  return paginate(sortedWriting, {
+    pageSize: 8,
+  })
+}) satisfies GetStaticPaths
+
+interface Props {
+  page: Page<CollectionEntry<'writing'>>
+}
+
+const { page } = Astro.props
+---
+
+<DefaultLayout
+  title="Writing"
+  description="Published writing and archived analysis by J. Dylan Beckham on markets, business operations, project management, analytics, and decision-making."
+>
+  <PageHeader
+    title="Writing"
+    subtitle="Published analysis, professional writing, and selected archival work on markets, operations, project management, analytics, and decision-making."
+    bgType="bordered"
+  />
+
+  <section class="my-16">
+    <div class="container">
+      <div class="mb-14 max-w-4xl">
+        <h2 class="mb-4 text-2xl font-bold">Quiet Speculation Archive · 2013–2014</h2>
+        <p class="text-lg leading-relaxed">
+          From December 2013 through April 2014, I wrote a recurring column for
+          Quiet Speculation examining the economics and operations of the
+          Magic: The Gathering secondary market. Across 18 published articles,
+          I explored pricing, supply and demand, market behavior, risk,
+          negotiation, inventory decisions, business planning, and repeatable
+          buying and selling processes.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-10">
+        {
+          page.data.map((entry) => (
+            <article class="max-w-5xl border-t pt-8">
+              <div class="mb-5 flex flex-wrap gap-2">
+                {entry.data.historical && <Badge>Historical Archive</Badge>}
+                <Badge>{entry.data.category}</Badge>
+                {entry.data.featured && <Badge>Featured</Badge>}
+              </div>
+
+              <p class="mb-2">
+                <time datetime={entry.data.publishedDate.toISOString().slice(0, 10)}>
+                  {entry.data.publishedDate.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </time>
+                {entry.data.publication && <> · {entry.data.publication}</>}
+              </p>
+
+              <h2 class="mb-5 text-3xl font-bold md:text-4xl">
+                <Link href={'/writing/' + entry.id}>
+                  {entry.data.title}
+                </Link>
+              </h2>
+
+              <p class="mb-6 max-w-4xl text-lg leading-relaxed">
+                {entry.data.description}
+              </p>
+
+              <Link
+                href={'/writing/' + entry.id}
+                isButton
+                type="primary"
+                animateOnHover
+                animationType="nudge"
+              >
+                Read Article
+              </Link>
+            </article>
+          ))
+        }
+      </div>
+
+      {
+        page && page.lastPage > 1 && (
+          <div class="mt-16 grid place-content-center">
+            <Pagination
+              firstPage={page.url.prev ? '/writing' : null}
+              previousPage={page.url.prev ? page.url.prev : null}
+              nextPage={page.url.next ? page.url.next : null}
+              lastPage={page.url.next ? `/writing/${page.lastPage}` : null}
+              currentPage={`${page.currentPage}`}
+              totalPages={`${page.lastPage}`}
+              ariaLabel="Writing pagination"
+            />
+          </div>
+        )
+      }
+    </div>
+  </section>
+</DefaultLayout>

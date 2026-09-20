@@ -1,0 +1,37 @@
+---
+import WritingLayout from '@layouts/WritingLayout.astro'
+import { getCollection, render } from 'astro:content'
+import type { CollectionEntry } from 'astro:content'
+
+export async function getStaticPaths() {
+  const entries = await getCollection('writing')
+
+  return entries.map((entry) => ({
+    params: { writing: entry.id },
+    props: { entry },
+  }))
+}
+
+interface Props {
+  entry: CollectionEntry<'writing'>
+}
+
+const { entry } = Astro.props
+const { Content } = await render(entry)
+---
+
+<WritingLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  author={entry.data.author}
+  publishedDate={entry.data.publishedDate}
+  publication={entry.data.publication}
+  series={entry.data.series}
+  category={entry.data.category}
+  tags={entry.data.tags}
+  historical={entry.data.historical}
+  originalUrl={entry.data.originalUrl}
+  archivePdf={entry.data.archivePdf}
+>
+  <Content />
+</WritingLayout>
