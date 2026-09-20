@@ -156,8 +156,15 @@ const machineDate = publishedDate.toISOString().slice(0, 10)
     max-inline-size: 100%;
   }
 
+  .writing-column .archive-image--card {
+    display: grid;
+    place-items: center;
+  }
+
   .writing-column .archive-image--card img {
     inline-size: min(100%, 320px);
+    aspect-ratio: 5 / 7;
+    object-fit: contain;
   }
 
   .writing-column .archive-image--feature img {
@@ -166,5 +173,28 @@ const machineDate = publishedDate.toISOString().slice(0, 10)
 
   .writing-column .archive-image--wide img {
     inline-size: min(100%, 680px);
+  }
+
+
+  .writing-column .archive-image--deck {
+    display: grid;
+    place-items: center;
+  }
+
+  .writing-column .archive-image--deck img {
+    inline-size: min(100%, 560px);
+    aspect-ratio: 4 / 3;
+    object-fit: contain;
+  }
+
+  .writing-column .archive-image--uniform {
+    display: grid;
+    place-items: center;
+  }
+
+  .writing-column .archive-image--uniform img {
+    inline-size: min(100%, 560px);
+    aspect-ratio: 14 / 9;
+    object-fit: contain;
   }
 </style>

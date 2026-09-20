@@ -1,10 +1,18 @@
 ---
 import DefaultLayout from '@layouts/DefaultLayout.astro'
 import PageHeader from '@components/PageHeader.astro'
-import { Badge, Link, Pagination } from 'accessible-astro-components'
+import { Badge, Link } from 'accessible-astro-components'
 import { getCollection } from 'astro:content'
 import type { GetStaticPaths, Page } from 'astro'
 import type { CollectionEntry } from 'astro:content'
+
+const featuredOrder = [
+  'seven-abilities-of-exceptional-traders',
+  'the-power-of-choice',
+  'what-real-economics-can-teach-us-about-modern',
+  'the-midas-touch',
+  'rinse-repeat',
+]
 
 export const getStaticPaths = (async ({ paginate }) => {
   const writing = await getCollection('writing')
@@ -15,7 +23,10 @@ export const getStaticPaths = (async ({ paginate }) => {
   )
 
   return paginate(sortedWriting, {
-    pageSize: 8,
+    // The archive is intentionally compact enough to keep all 18 historical
+    // articles on one page. This leaves room for future writing before a
+    // second archive page is needed.
+    pageSize: 24,
   })
 }) satisfies GetStaticPaths
 
@@ -24,6 +35,25 @@ interface Props {
 }
 
 const { page } = Astro.props
+
+const featuredWriting = page.data
+  .filter((entry) => entry.data.featured)
+  .sort((a, b) => {
+    const aIndex = featuredOrder.indexOf(a.id)
+    const bIndex = featuredOrder.indexOf(b.id)
+
+    const safeA = aIndex === -1 ? Number.MAX_SAFE_INTEGER : aIndex
+    const safeB = bIndex === -1 ? Number.MAX_SAFE_INTEGER : bIndex
+
+    return safeA - safeB
+  })
+
+const formatDate = (date: Date) =>
+  date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  })
 ---
 
 <DefaultLayout
@@ -38,78 +68,179 @@ const { page } = Astro.props
 
   <section class="my-16">
     <div class="container">
-      <div class="mb-14 max-w-4xl">
-        <h2 class="mb-4 text-2xl font-bold">Quiet Speculation Archive · 2013–2014</h2>
-        <p class="text-lg leading-relaxed">
-          From December 2013 through April 2014, I wrote a recurring column for
-          Quiet Speculation examining the economics and operations of the
-          Magic: The Gathering secondary market. Across 18 published articles,
-          I explored pricing, supply and demand, market behavior, risk,
-          negotiation, inventory decisions, business planning, and repeatable
-          buying and selling processes.
-        </p>
-      </div>
-
-      <div class="flex flex-col gap-10">
-        {
-          page.data.map((entry) => (
-            <article class="max-w-5xl border-t pt-8">
-              <div class="mb-5 flex flex-wrap gap-2">
-                {entry.data.historical && <Badge>Historical Archive</Badge>}
-                <Badge>{entry.data.category}</Badge>
-                {entry.data.featured && <Badge>Featured</Badge>}
-              </div>
-
-              <p class="mb-2">
-                <time datetime={entry.data.publishedDate.toISOString().slice(0, 10)}>
-                  {entry.data.publishedDate.toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                  })}
-                </time>
-                {entry.data.publication && <> · {entry.data.publication}</>}
-              </p>
-
-              <h2 class="mb-5 text-3xl font-bold md:text-4xl">
-                <Link href={'/writing/' + entry.id}>
-                  {entry.data.title}
-                </Link>
-              </h2>
-
-              <p class="mb-6 max-w-4xl text-lg leading-relaxed">
-                {entry.data.description}
-              </p>
-
-              <Link
-                href={'/writing/' + entry.id}
-                isButton
-                type="primary"
-                animateOnHover
-                animationType="nudge"
-              >
-                Read Article
-              </Link>
-            </article>
-          ))
-        }
-      </div>
-
-      {
-        page && page.lastPage > 1 && (
-          <div class="mt-16 grid place-content-center">
-            <Pagination
-              firstPage={page.url.prev ? '/writing' : null}
-              previousPage={page.url.prev ? page.url.prev : null}
-              nextPage={page.url.next ? page.url.next : null}
-              lastPage={page.url.next ? `/writing/${page.lastPage}` : null}
-              currentPage={`${page.currentPage}`}
-              totalPages={`${page.lastPage}`}
-              ariaLabel="Writing pagination"
-            />
+      <div class="writing-index-column">
+        <section aria-labelledby="featured-writing-heading">
+          <div class="mb-10">
+            <p class="mb-2 text-sm font-bold uppercase tracking-wide">
+              Selected archive
+            </p>
+            <h2
+              id="featured-writing-heading"
+              class="mb-4 text-3xl font-bold md:text-4xl"
+            >
+              Featured Writing
+            </h2>
+            <p class="max-w-4xl text-lg leading-relaxed">
+              Five pieces selected for their connection to business judgment,
+              economics, negotiation, valuation, risk, and repeatable
+              decision-making.
+            </p>
           </div>
-        )
-      }
+
+          <div class="featured-grid">
+            {
+              featuredWriting.map((entry, index) => (
+                <article
+                  class:list={[
+                    'featured-writing-card border p-6 md:p-8',
+                    index === 0 && 'featured-writing-card--lead',
+                  ]}
+                >
+                  <div class="mb-4 flex flex-wrap gap-2">
+                    <Badge>{entry.data.category}</Badge>
+                    {entry.data.tags.slice(0, 2).map((tag) => (
+                      <Badge>{tag}</Badge>
+                    ))}
+                  </div>
+
+                  <h3 class="mb-4 text-2xl font-bold md:text-3xl">
+                    <Link href={'/writing/' + entry.id}>
+                      {entry.data.title}
+                    </Link>
+                  </h3>
+
+                  <p class="mb-3 text-sm">
+                    <time
+                      datetime={entry.data.publishedDate
+                        .toISOString()
+                        .slice(0, 10)}
+                    >
+                      {formatDate(entry.data.publishedDate)}
+                    </time>
+                    {entry.data.publication && <> · {entry.data.publication}</>}
+                  </p>
+
+                  <p class="mb-6 leading-relaxed">
+                    {entry.data.description}
+                  </p>
+
+                  <Link
+                    href={'/writing/' + entry.id}
+                    isButton
+                    type="primary"
+                    animateOnHover
+                    animationType="nudge"
+                  >
+                    Read Article
+                  </Link>
+                </article>
+              ))
+            }
+          </div>
+        </section>
+
+        <section
+          class="mt-20"
+          aria-labelledby="quiet-speculation-archive-heading"
+        >
+          <div class="mb-10 border-t pt-10">
+            <p class="mb-2 text-sm font-bold uppercase tracking-wide">
+              Complete historical collection
+            </p>
+            <h2
+              id="quiet-speculation-archive-heading"
+              class="mb-4 text-3xl font-bold md:text-4xl"
+            >
+              Quiet Speculation Archive · 2013–2014
+            </h2>
+
+            <p class="max-w-4xl text-lg leading-relaxed">
+              From December 2013 through April 2014, I wrote a recurring
+              column for Quiet Speculation examining the economics and
+              operations of the Magic: The Gathering secondary market.
+              Across 18 published articles, I explored pricing, supply and
+              demand, market behavior, risk, negotiation, inventory
+              decisions, business planning, and repeatable buying and selling
+              processes.
+            </p>
+          </div>
+
+          <div class="archive-list">
+            {
+              page.data.map((entry) => (
+                <article class="archive-row border-t py-6">
+                  <div class="archive-date">
+                    <time
+                      datetime={entry.data.publishedDate
+                        .toISOString()
+                        .slice(0, 10)}
+                    >
+                      {formatDate(entry.data.publishedDate)}
+                    </time>
+                  </div>
+
+                  <div class="archive-content">
+                    <div class="mb-2 flex flex-wrap items-center gap-2">
+                      <Badge>{entry.data.category}</Badge>
+                      {entry.data.featured && <Badge>Featured</Badge>}
+                    </div>
+
+                    <h3 class="mb-2 text-xl font-bold md:text-2xl">
+                      <Link href={'/writing/' + entry.id}>
+                        {entry.data.title}
+                      </Link>
+                    </h3>
+
+                    <p class="max-w-4xl leading-relaxed">
+                      {entry.data.description}
+                    </p>
+                  </div>
+                </article>
+              ))
+            }
+          </div>
+        </section>
+      </div>
     </div>
   </section>
 </DefaultLayout>
+
+<style lang="scss">
+  .writing-index-column {
+    max-width: 1100px;
+  }
+
+  .featured-grid {
+    display: grid;
+    gap: var(--space-m);
+  }
+
+  .featured-writing-card {
+    border-color: var(--border-color-subtle);
+    border-radius: var(--radius-l);
+  }
+
+  .archive-row {
+    display: grid;
+    gap: var(--space-s);
+  }
+
+  .archive-date {
+    font-weight: 700;
+  }
+
+  @media (min-width: 768px) {
+    .featured-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .featured-writing-card--lead {
+      grid-column: 1 / -1;
+    }
+
+    .archive-row {
+      grid-template-columns: 150px minmax(0, 1fr);
+      gap: var(--space-l);
+    }
+  }
+</style>
