@@ -1,14 +1,19 @@
 ---
 import DefaultLayout from '@layouts/DefaultLayout.astro'
 import Hero from '@components/Hero.astro'
-import ProjectCapabilities from '@components/ProjectCapabilities.astro'
 import FeaturedProjects from '@components/FeaturedProjects.astro'
+import ProjectCapabilities from '@components/ProjectCapabilities.astro'
+import WhatIBring from '@components/WhatIBring.astro'
 ---
 
 <DefaultLayout title="J. Dylan Beckham" useTitleTemplate={false}>
   <Hero />
 
-    <FeaturedProjects />
+  <WhatIBring />
 
-    <ProjectCapabilities />
+  <ProjectCapabilities />
+
+  <FeaturedProjects />
+
+
 </DefaultLayout>

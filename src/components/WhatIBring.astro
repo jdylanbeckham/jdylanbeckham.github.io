@@ -1,0 +1,89 @@
+---
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<section class:list={[className, 'my-24']} aria-labelledby="what-i-bring-heading">
+  <div class="container">
+    <div class="max-w-5xl">
+      <h2 id="what-i-bring-heading" class="mb-6 text-4xl font-bold md:text-5xl">
+        What I Bring
+      </h2>
+
+      <p class="mb-12 max-w-4xl text-xl leading-relaxed">
+        A combination of project discipline, analytical thinking, technical
+        fluency, and operational experience focused on moving complex work
+        toward measurable outcomes.
+      </p>
+
+      <div class="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-2">
+        <article class="border-t pt-6">
+          <h3 class="mb-4 text-2xl font-bold">
+            Project Management &amp; Structured Execution
+          </h3>
+          <p class="mb-4 text-lg leading-relaxed">
+            Turn broad objectives into organized, controllable work.
+          </p>
+          <p class="text-sm font-semibold">
+            Requirements • Scope • Scheduling • Risk • Stakeholders • Change Control
+          </p>
+        </article>
+
+        <article class="border-t pt-6">
+          <h3 class="mb-4 text-2xl font-bold">
+            Business Analysis &amp; Process Improvement
+          </h3>
+          <p class="mb-4 text-lg leading-relaxed">
+            Clarify what needs to happen, why it matters, and how the process can
+            work better.
+          </p>
+          <p class="text-sm font-semibold">
+            Requirements Analysis • Process Improvement • Workflow Design • Decision Rules
+          </p>
+        </article>
+
+        <article class="border-t pt-6">
+          <h3 class="mb-4 text-2xl font-bold">
+            Analytics &amp; Decision Support
+          </h3>
+          <p class="mb-4 text-lg leading-relaxed">
+            Use data to understand performance, identify patterns, and support
+            better decisions.
+          </p>
+          <p class="text-sm font-semibold">
+            KPIs • Forecasting • Dashboards • Data Visualization • Operational Analysis
+          </p>
+        </article>
+
+        <article class="border-t pt-6">
+          <h3 class="mb-4 text-2xl font-bold">
+            Technical &amp; Data Fluency
+          </h3>
+          <p class="mb-4 text-lg leading-relaxed">
+            Work directly with data and technical tools while keeping the
+            business objective in view.
+          </p>
+          <p class="text-sm font-semibold">
+            Python • SQL • pandas • Jupyter • Git/GitHub
+          </p>
+        </article>
+
+        <article class="border-t pt-6">
+          <h3 class="mb-4 text-2xl font-bold">
+            Operations &amp; Cross-Functional Execution
+          </h3>
+          <p class="mb-4 text-lg leading-relaxed">
+            Move work forward when information, resources, and priorities are
+            imperfect.
+          </p>
+          <p class="text-sm font-semibold">
+            Operations • Resource Prioritization • Vendor Coordination • Risk Evaluation • Execution
+          </p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
