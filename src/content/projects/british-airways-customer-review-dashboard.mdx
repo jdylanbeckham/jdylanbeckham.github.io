@@ -1,0 +1,221 @@
+---
+title: "British Airways Customer Review Dashboard"
+author: "J. Dylan Beckham"
+description: "Interactive Tableau analysis of 1,324 British Airways customer reviews across service metrics, aircraft, geography, traveler segments, and time."
+tags:
+  - Tableau
+  - Data Visualization
+  - Dashboard Development
+  - Customer Analytics
+  - Decision Support
+featured: false
+---
+
+import { Image } from 'astro:assets'
+import dashboardPreview from '../../assets/images/projects/british-airways-customer-review-dashboard/british-airways-reviews-rebuild.png'
+
+## Project Overview
+
+This project develops an interactive Tableau dashboard for exploring **1,324 British Airways customer reviews** across time, geography, aircraft, traveler type, seat class, and multiple service dimensions.
+
+The objective was not simply to visualize review data, but to build a compact decision-support interface that allows a user to move between high-level performance signals and more detailed customer-experience patterns.
+
+<a
+  href="https://public.tableau.com/app/profile/james.beckham4086/viz/BritishAirwaysReviewRebuild/Dashboard1"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  View Interactive Dashboard on Tableau Public ↗
+</a>
+
+<Image
+  src={dashboardPreview}
+  alt="British Airways customer review Tableau dashboard showing interactive review metrics, trends, geography, and aircraft analysis"
+  class="w-full rounded-lg"
+  loading="eager"
+/>
+
+## Business Question
+
+Customer-review data can contain useful information about service quality, but individual reviews are difficult to interpret at scale.
+
+This dashboard was designed to answer questions such as:
+
+- How do overall customer ratings change over time?
+- How does customer experience differ by traveler type and seat class?
+- Are there meaningful geographic differences in review patterns?
+- How do ratings compare across aircraft types?
+- Which service dimensions appear stronger or weaker?
+- How can a reviewer move quickly between broad trends and more specific segments?
+
+The result is an exploratory dashboard that supports both summary-level review and targeted filtering.
+
+## Data
+
+The analytical dataset contains **1,324 British Airways customer reviews** spanning **March 2016 through October 2023**.
+
+Review data includes:
+
+- overall rating;
+- recommendation status;
+- traveler type;
+- seat class;
+- aircraft;
+- route;
+- review date and flight date;
+- seat comfort;
+- cabin staff service;
+- food and beverages;
+- ground service;
+- value for money; and
+- entertainment.
+
+A separate country reference table provides **country, country code, continent, and region** fields used to support geographic analysis.
+
+## Dashboard Design
+
+The Tableau workbook is organized around four analytical views:
+
+### Summary
+
+Provides the selected metric at a high level so users can quickly understand the current filtered population.
+
+### Monthly Trend
+
+Shows how the selected metric changes over time, making it possible to identify changes in customer experience across the review period.
+
+### Geographic View
+
+Maps review performance geographically using country-level review information joined to continent and region attributes.
+
+### Aircraft Comparison
+
+Compares the selected metric across aircraft groups to support equipment-level exploration.
+
+These views are combined into a single dashboard so the same filters and selected metric can be applied across multiple analytical perspectives.
+
+## Interactive Controls
+
+A parameter-driven metric selector allows users to switch among:
+
+- Overall Rating
+- Cabin Staff Service
+- Entertainment
+- Food
+- Ground Service
+- Comfort
+- Value
+
+Additional filters allow the dashboard to be segmented by:
+
+- review date;
+- traveler type;
+- seat class;
+- continent; and
+- aircraft.
+
+This design reduces the need for separate dashboards for every service measure while allowing users to explore the same business question from several dimensions.
+
+## Key Findings
+
+Several patterns are visible in the review data:
+
+- The full dataset averages approximately **4.19 out of 10** for overall rating.
+- **572 of 1,324 reviews** recommend British Airways, representing roughly **43%** of the sample.
+- Average overall ratings were materially lower in **2023** than in several earlier years in the dataset.
+- **Solo Leisure** reviewers show a higher recommendation rate than **Business** travelers in the source data.
+- The review population is geographically concentrated in Europe, which should be considered when interpreting geographic comparisons.
+
+These findings are descriptive rather than causal. The dashboard is intended to support exploration and pattern identification rather than establish why a particular customer group or time period received a given rating.
+
+## Interactive Tableau Dashboard
+
+Use the dashboard below to select a service metric and filter the review population by time, traveler type, seat class, geography, or aircraft.
+
+<div style="width: 100%; overflow: hidden;">
+  <iframe
+    src="https://public.tableau.com/views/BritishAirwaysReviewRebuild/Dashboard1?:showVizHome=no"
+    width="100%"
+    height="780"
+    style="border: 0;"
+    loading="lazy"
+    title="British Airways Customer Review Dashboard"
+  ></iframe>
+</div>
+
+<small style="display: block; margin-top: 0.5rem;">
+  If the embedded dashboard does not load, use the Tableau Public link above.
+</small>
+
+## Data Quality and Limitations
+
+The dashboard should be interpreted as an exploratory customer-review analysis rather than a representative measure of the entire British Airways customer population.
+
+Important limitations include:
+
+- the dataset reflects submitted reviews rather than a random customer sample;
+- review volume varies materially by year;
+- geography is concentrated in a relatively small number of markets;
+- aircraft labels are not fully standardized across every record;
+- service-specific fields contain unrated responses represented by sentinel values in the source data and must be excluded from average-rating calculations; and
+- customer-review data can reflect selection bias because customers with unusually positive or negative experiences may be more likely to submit reviews.
+
+These limitations are important when translating dashboard patterns into operational conclusions.
+
+## Decision-Support Value
+
+The dashboard demonstrates how customer-feedback data can be transformed into a usable exploratory decision-support tool.
+
+A business user could use the interface to:
+
+- identify periods of declining or improving customer ratings;
+- compare customer experience across traveler segments;
+- examine differences among seat classes;
+- identify service dimensions requiring deeper investigation;
+- compare aircraft-level review patterns; and
+- isolate geographic segments for additional analysis.
+
+The dashboard is designed to support investigation and prioritization rather than replace deeper operational or causal analysis.
+
+## Skills Demonstrated
+
+This project demonstrates practical capability in:
+
+- Tableau dashboard development;
+- calculated fields and parameters;
+- interactive filtering;
+- dashboard layout and visual hierarchy;
+- temporal analysis;
+- geographic analysis;
+- categorical comparison;
+- data integration;
+- customer-experience analytics;
+- exploratory data analysis; and
+- analytical communication and decision support.
+
+## Technical Evidence
+
+### Tableau Public
+
+<a
+  href="https://public.tableau.com/app/profile/james.beckham4086/viz/BritishAirwaysReviewRebuild/Dashboard1"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  Open British Airways Customer Review Dashboard ↗
+</a>
+
+### Project Files
+
+The portfolio project is supported by:
+
+- the Tableau workbook;
+- the British Airways review dataset; and
+- the country / geography reference dataset.
+
+## Project Status
+
+**Interactive dashboard complete and published to Tableau Public.**
+
+The portfolio case study adds business framing, methodology, analytical interpretation, limitations, and direct access to the live interactive dashboard.
+'''

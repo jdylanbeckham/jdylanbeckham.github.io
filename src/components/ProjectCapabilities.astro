@@ -1,0 +1,58 @@
+---
+import { Heading, Link } from 'accessible-astro-components'
+import { getCollection } from 'astro:content'
+import { slugify } from '@utils/slugify'
+
+const projects = await getCollection('projects')
+
+const labels = [...new Set(projects.flatMap((project) => project.data.tags))]
+  .filter(Boolean)
+  .sort((a, b) => a.localeCompare(b))
+
+const items = labels.map((label) => ({
+  label,
+  slug: slugify(label),
+}))
+---
+
+<section class="mt-16 mb-64" aria-labelledby="project-capabilities-heading">
+  <div class="container">
+    <div class="max-w-5xl">
+      <Heading
+        level="h2"
+        size="h4"
+        class="mb-3"
+        id="project-capabilities-heading"
+      >
+        Capabilities &amp; Topics
+      </Heading>
+
+      <p class="mb-5 max-w-4xl text-lg leading-relaxed">
+        Explore project evidence by capability, tool, or subject area.
+      </p>
+
+      <nav aria-label="Project capabilities and topics">
+        <div class="flex flex-wrap gap-x-4 gap-y-2">
+          {
+            items.map((item) => (
+              <Link href={`/projects/tag/${item.slug}`}>
+                {item.label}
+              </Link>
+            ))
+          }
+        </div>
+      </nav>
+
+      <div class="mt-5">
+       <Link
+       	 href="/projects/"
+       	 isButton
+       	 animateOnHover
+       	 animationType="nudge"
+      	>
+        View All Projects
+        
+      </div>
+    </div>
+  </div>
+</section>
