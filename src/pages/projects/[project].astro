@@ -20,6 +20,19 @@ interface Props {
 
 const { project } = Astro.props
 const { Content } = await render(project)
+
+function safeFilename(value: string) {
+  return value
+    .normalize('NFKD')
+    .replace(/[^\w\s-]/g, '')
+    .trim()
+    .replace(/[\s_]+/g, '-')
+    .replace(/-+/g, '-')
+}
+
+const caseStudyPdfHref =
+  `/files/case-studies/J-Dylan-Beckham-${safeFilename(project.data.title)}-Case-Study.pdf`
+
 ---
 
 <DefaultLayout
@@ -33,19 +46,30 @@ const { Content } = await render(project)
     bgType="bordered"
   />
 
-  <section class="my-10">
-    <div class="container">
-      <div class="project-column">
-        <div class="flex flex-wrap gap-2">
-          {
-            project.data.tags.map((tag) => (
-              <Badge>{tag}</Badge>
-            ))
-          }
-        </div>
+<section class="my-10">
+  <div class="container">
+    <div class="project-column">
+      <div class="flex flex-wrap gap-2">
+        {
+          project.data.tags.map((tag) => (
+            <Badge>{tag}</Badge>
+          ))
+        }
+      </div>
+
+      <div class="mt-6">
+        <Link
+          href={caseStudyPdfHref}
+          isButton
+          animateOnHover
+          animationType="nudge"
+        >
+          Download Case Study PDF
+        </Link>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <section class="my-12">
     <div class="container">

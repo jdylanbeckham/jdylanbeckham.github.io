@@ -1,0 +1,334 @@
+---
+import '../styles/tailwind.css'
+import '../assets/scss/index.scss'
+import themeConfig from '@theme-config'
+
+interface Props {
+  title: string
+  description?: string
+  projectUrl: string
+}
+
+const {
+  title,
+  description = '',
+  projectUrl,
+} = Astro.props
+---
+
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="author" content="J. Dylan Beckham" />
+    <title>{title} — Case Study</title>
+
+    <style
+      define:vars={{
+        brandPrimary: themeConfig.colors.primary,
+        brandSecondary: themeConfig.colors.secondary,
+        brandNeutral: themeConfig.colors.neutral,
+        brandOutline: themeConfig.colors.outline,
+      }}
+    >
+      :global(:root) {
+        --brand-primary: var(--brandPrimary);
+        --brand-secondary: var(--brandSecondary);
+        --brand-neutral: var(--brandNeutral);
+        --brand-outline: var(--brandOutline);
+      }
+    </style>
+  </head>
+
+  <body>
+    <main class="print-document">
+      <header class="document-header">
+        <div>
+          <p class="document-kicker">
+  <a href="https://jdylanbeckham.com">J. Dylan Beckham</a>
+  <span aria-hidden="true"> · </span>
+  <a href="https://jdylanbeckham.com/projects/">Project Case Study</a>
+</p>
+
+          <h1>
+            <a href={projectUrl}>{title}</a>
+          </h1>
+
+          {description && <p class="document-description">{description}</p>}
+        </div>
+
+        
+      </header>
+
+      <slot />
+
+    <footer class="document-footer">
+  <span>J. Dylan Beckham</span>
+
+  <div class="document-footer-links">
+    <a href="https://jdylanbeckham.com/projects/">See All Projects</a>
+    <a href="https://jdylanbeckham.com">jdylanbeckham.com</a>
+  </div>
+</footer>
+    </main>
+
+    <style is:global>
+      @page {
+        size: Letter;
+        margin: 0.55in 0.65in 0.6in;
+      }
+
+      html,
+      body {
+        margin: 0;
+      }
+
+      html {
+        background: #eceff1;
+      }
+
+      body {
+        background: #eceff1;
+        color: #171717;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.48;
+      }
+
+      .print-document {
+        box-sizing: border-box;
+        width: min(8.5in, calc(100% - 2rem));
+        min-height: 11in;
+        margin: 2rem auto;
+        padding: 0.55in 0.65in 0.6in;
+        background: #fff;
+        box-shadow: 0 8px 30px rgb(0 0 0 / 0.12);
+      }
+
+      .document-header {
+        display: flex;
+        justify-content: space-between;
+        gap: 2rem;
+        align-items: flex-start;
+        padding-bottom: 1.2rem;
+        margin-bottom: 1.5rem;
+        border-bottom: 2px solid var(--brand-primary);
+      }
+
+      .document-kicker {
+        margin: 0 0 0.45rem;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+.document-kicker a {
+  color: #1a5fb4;
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+      .document-header h1 {
+        margin: 0;
+        font-size: 2rem;
+        line-height: 1.12;
+      }
+
+.document-header h1 a {
+  color: #1a5fb4;
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+.document-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.6rem;
+  flex: 0 0 auto;
+  padding-top: 0.15rem;
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+.document-meta a {
+  color: #1a5fb4;
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+      .document-description {
+        max-width: 46rem;
+        margin: 0.65rem 0 0;
+        font-size: 1rem;
+        line-height: 1.45;
+      }
+
+
+
+      .print-project-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+        margin: 0 0 1.4rem;
+        padding: 0;
+        list-style: none;
+      }
+
+      .print-project-tags li {
+        padding: 0.18rem 0.48rem;
+        border: 1px solid #b9bec4;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        line-height: 1.2;
+      }
+
+      .print-content {
+        max-width: none;
+      }
+
+      .print-content > :first-child {
+        margin-top: 0;
+      }
+
+      .print-content h2 {
+        margin: 1.55rem 0 0.55rem;
+        font-size: 1.32rem;
+        line-height: 1.2;
+        break-after: avoid-page;
+        page-break-after: avoid;
+      }
+
+      .print-content h3 {
+        margin: 1.2rem 0 0.45rem;
+        font-size: 1.05rem;
+        line-height: 1.25;
+        break-after: avoid-page;
+        page-break-after: avoid;
+      }
+
+      .print-content p,
+      .print-content li {
+        font-size: 0.9rem;
+        line-height: 1.48;
+        orphans: 3;
+        widows: 3;
+      }
+
+      .print-content p {
+        margin: 0.45rem 0 0.8rem;
+      }
+
+      .print-content ul,
+      .print-content ol {
+        margin: 0.45rem 0 0.9rem 1.25rem;
+        padding: 0;
+      }
+
+      .print-content li {
+        margin-bottom: 0.24rem;
+      }
+
+      .print-content img,
+      .print-content picture,
+      .print-content figure,
+      .print-content table,
+      .print-content pre,
+      .print-content blockquote {
+        max-width: 100%;
+        break-inside: avoid-page;
+        page-break-inside: avoid;
+      }
+
+      .print-content img {
+        height: auto;
+      }
+
+      .print-content figure {
+        margin: 1rem 0;
+      }
+
+      .print-content table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.78rem;
+      }
+
+      .print-content th,
+      .print-content td {
+        padding: 0.35rem 0.45rem;
+        border: 1px solid #d7d7d7;
+        vertical-align: top;
+      }
+
+      .print-content pre {
+        overflow-wrap: anywhere;
+        white-space: pre-wrap;
+        font-size: 0.72rem;
+      }
+
+      .print-content a {
+        color: inherit;
+        text-decoration: underline;
+        text-decoration-thickness: 0.06em;
+        text-underline-offset: 0.12em;
+      }
+
+      .document-footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding-top: 0.65rem;
+        border-top: 1px solid #b9bec4;
+        font-size: 0.72rem;
+      }
+
+.document-footer-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.document-footer-links a {
+  color: #1a5fb4;
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+      @media print {
+        html,
+        body {
+          background: #fff !important;
+        }
+
+        body {
+          font-size: 10.5pt;
+        }
+
+        .print-document {
+          width: auto;
+          min-height: 0;
+          margin: 0;
+          padding: 0;
+          box-shadow: none;
+        }
+      }
+
+      @media screen and (max-width: 760px) {
+        .print-document {
+          width: calc(100% - 1rem);
+          margin: 0.5rem auto;
+          padding: 1.25rem;
+        }
+
+        .document-header {
+          display: block;
+        }
+
+        .document-meta {
+          margin-top: 0.7rem;
+        }
+      }
+    </style>
+  </body>
+</html>

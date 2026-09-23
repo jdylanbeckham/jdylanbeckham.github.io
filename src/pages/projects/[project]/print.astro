@@ -1,0 +1,39 @@
+---
+import ProjectPrintLayout from '@layouts/ProjectPrintLayout.astro'
+import { getCollection, render } from 'astro:content'
+import type { CollectionEntry } from 'astro:content'
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects')
+
+  return projects.map((project) => ({
+    params: { project: project.id },
+    props: { project },
+  }))
+}
+
+interface Props {
+  project: CollectionEntry<'projects'>
+}
+
+const { project } = Astro.props
+const { Content } = await render(project)
+---
+
+<ProjectPrintLayout
+  title={project.data.title}
+  description={project.data.description}
+  projectUrl={`https://jdylanbeckham.com/projects/${project.id}/`}
+>
+  <ul class="print-project-tags" aria-label="Project technologies and topics">
+    {
+      project.data.tags.map((tag) => (
+        <li>{tag}</li>
+      ))
+    }
+  </ul>
+
+  <article class="print-content">
+    <Content />
+  </article>
+</ProjectPrintLayout>
