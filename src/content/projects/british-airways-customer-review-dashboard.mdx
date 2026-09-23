@@ -28,13 +28,24 @@ The objective was not simply to visualize review data, but to build a compact de
   View Interactive Dashboard on Tableau Public ↗
 </a>
 
-<Image
-  src={dashboardPreview}
-  alt="British Airways customer review Tableau dashboard showing interactive review metrics, trends, geography, and aircraft analysis"
-  class="w-full rounded-lg"
-  loading="eager"
-/>
+## Interactive Tableau Dashboard
 
+Use the dashboard below to select a service metric and filter the review population by time, traveler type, seat class, geography, or aircraft.
+
+<div style="width: 100%; overflow: hidden;">
+  <iframe
+    src="https://public.tableau.com/views/BritishAirwaysReviewRebuild/Dashboard1?:showVizHome=no"
+    width="100%"
+    height="780"
+    style="border: 0;"
+    loading="lazy"
+    title="British Airways Customer Review Dashboard"
+  ></iframe>
+</div>
+
+<small style="display: block; margin-top: 0.5rem;">
+  If the embedded dashboard does not load, use the Tableau Public link above.
+</small>
 ## Business Question
 
 Customer-review data can contain useful information about service quality, but individual reviews are difficult to interpret at scale.
@@ -128,24 +139,7 @@ Several patterns are visible in the review data:
 
 These findings are descriptive rather than causal. The dashboard is intended to support exploration and pattern identification rather than establish why a particular customer group or time period received a given rating.
 
-## Interactive Tableau Dashboard
 
-Use the dashboard below to select a service metric and filter the review population by time, traveler type, seat class, geography, or aircraft.
-
-<div style="width: 100%; overflow: hidden;">
-  <iframe
-    src="https://public.tableau.com/views/BritishAirwaysReviewRebuild/Dashboard1?:showVizHome=no"
-    width="100%"
-    height="780"
-    style="border: 0;"
-    loading="lazy"
-    title="British Airways Customer Review Dashboard"
-  ></iframe>
-</div>
-
-<small style="display: block; margin-top: 0.5rem;">
-  If the embedded dashboard does not load, use the Tableau Public link above.
-</small>
 
 ## Data Quality and Limitations
 
